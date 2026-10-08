@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parika, Nº 24</title>
+<meta name="description" content="The October issue. Happy birthday, Parika.">
+<meta name="theme-color" content="#3b0c16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600&text=%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90&display=swap">
+<link rel="preload" as="image" href="../photos/p17.webp" fetchpriority="high">
+<style>
+:root{
+  --wine:#3b0c16; --wine-2:#521423; --wine-3:#6e1c2e; --wine-deep:#22060c;
+  --cream:#f4e8d3; --cream-2:#e7d6b9; --ink:#2a0910;
+  --brass:#c9a063; --brass-2:#a37c45;
+  --muted:#d8bfa8; /* cream tinted toward wine, for secondary text on wine */
+  --display:"Bodoni Moda","Didot","Bodoni 72",serif;
+  --text:"Spectral",Georgia,serif;
+  --zh:"Noto Serif SC","Songti SC","STSong",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --gut:16px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--brass-2) var(--wine-deep);accent-color:var(--brass)}
+html.locked{overflow:hidden}
+body{margin:0;background:var(--wine);color:var(--cream);font:400 1.0625rem/1.65 var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--brass);color:var(--wine-deep)}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1;margin:0;text-wrap:balance;font-optical-sizing:auto}
+p{margin:0}
+.zh{font-family:var(--zh);font-weight:600}
+.wrap{width:100%;max-width:980px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+
+/* ---------- gate ---------- */
+.gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;border:0;padding:24px;width:100%;
+  background:radial-gradient(120% 80% at 50% 40%,var(--wine-3),var(--wine-deep) 75%);cursor:pointer;
+  transition:clip-path 1.1s var(--ease),visibility 0s 1.1s;clip-path:inset(0 0 0 0)}
+.gate::before{content:"";position:absolute;inset:14px;border:1px solid rgba(201,160,99,.45);pointer-events:none}
+.gate.open{clip-path:inset(0 0 100% 0);visibility:hidden}
+.gate-inner{display:grid;justify-items:center;gap:22px;text-align:center}
+.gate h1{font-style:italic;font-weight:400;font-size:clamp(3.2rem,16vw,5.5rem);letter-spacing:-.02em}
+.seal{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#e0bd82,var(--brass) 45%,var(--brass-2));
+  color:var(--wine-deep);font:italic 600 1.7rem/1 var(--display);box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 -3px 6px rgba(0,0,0,.25)}
+.gate small{font:500 .78rem/1 var(--display);letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+.gate .pulse{animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.45}}
+
+/* ---------- cover ---------- */
+.cover-stage{min-height:100svh;display:grid;place-items:center}
+.cover{position:relative;width:100%;height:100svh;min-height:600px;overflow:hidden;container-type:inline-size;background:var(--wine-deep);isolation:isolate}
+.cover img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 30%;filter:sepia(.18) contrast(1.06) brightness(.95);z-index:-2;transform:scale(1.08);transition:transform 2.4s var(--ease)}
+.cover::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(34,6,12,.82) 0%,rgba(59,12,22,.25) 34%,rgba(59,12,22,0) 52%,rgba(34,6,12,.55) 74%,rgba(34,6,12,.92) 100%),
+             linear-gradient(0deg,rgba(110,28,46,.28),rgba(110,28,46,.28));mix-blend-mode:normal}
+.strip{display:flex;justify-content:space-between;gap:8px;padding:calc(14px + env(safe-area-inset-top)) var(--gut) 0;
+  font:500 .62rem/1.2 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--cream-2)}
+.mast{padding:6px var(--gut) 0;text-align:center}
+.mast .hb{display:block;font:italic 400 clamp(1.8rem,9.5cqw,3.4rem)/1 var(--display);letter-spacing:-.01em;color:var(--cream)}
+.mast .name{display:block;font:700 clamp(4.4rem,23.5cqw,9.5rem)/.86 var(--display);letter-spacing:-.035em;font-variation-settings:"opsz" 96;color:var(--cream);margin-top:.04em}
+.vzh{position:absolute;right:calc(var(--gut) - 2px);top:44%;writing-mode:vertical-rl;font-size:clamp(2rem,10cqw,3.4rem);letter-spacing:.18em;color:var(--brass);line-height:1}
+.issue{position:absolute;left:var(--gut);top:56%;display:grid;justify-items:start;gap:2px}
+.issue b{font:700 clamp(4rem,24cqw,7rem)/.8 var(--display);font-variation-settings:"opsz" 96;color:var(--brass);letter-spacing:-.03em}
+.issue span{font:500 .6rem/1.3 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--cream-2)}
+.lines{position:absolute;left:0;right:0;bottom:0;padding:0 var(--gut) calc(22px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr auto;gap:14px 12px;align-items:end}
+.lines ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.lines li{font:400 .95rem/1.25 var(--text);color:var(--cream);max-width:24ch}
+.lines li strong{display:block;font:600 1.18rem/1.05 var(--display);font-style:italic;color:var(--brass)}
+.barcode{display:grid;justify-items:center;gap:3px;background:var(--cream);padding:6px 6px 4px;color:var(--ink)}
+.barcode svg{display:block;width:62px;height:30px}
+.barcode span{font:500 .5rem/1 var(--text);letter-spacing:.12em}
+.scrollcue{position:absolute;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);width:1px;height:0}
+
+/* cover entrance (after the gate) */
+.js .mast .hb,.js .mast .name,.js .issue,.js .vzh,.js .lines{opacity:0;transform:translateY(18px);filter:blur(6px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease),filter 1.2s var(--ease)}
+.js .mast .name{clip-path:inset(0 0 100% 0);transform:none;filter:none;transition:clip-path 1.4s var(--ease) .15s,opacity .1s .15s}
+.opened .mast .hb,.opened .mast .name,.opened .issue,.opened .vzh,.opened .lines{opacity:1;transform:none;filter:none;clip-path:inset(0 0 0 0)}
+.opened .issue{transition-delay:.55s}.opened .vzh{transition-delay:.7s}.opened .lines{transition-delay:.85s}
+.opened .cover img.bg{transform:scale(1)}
+
+@media (min-width:720px){
+  .cover-stage{padding:5vh 0}
+  .cover{width:min(66vh,620px);height:min(88vh,826px);min-height:0;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 10px 20px -10px rgba(0,0,0,.5)}
+}
+
+/* ---------- sections ---------- */
+section{padding:96px 0 0}
+.h2{font-size:clamp(2.6rem,12vw,5rem);letter-spacing:-.025em;font-weight:500}
+.h2 em{font-style:italic;font-weight:400;color:var(--brass)}
+.dek{margin-top:14px;color:var(--muted);font-style:italic;max-width:34ch}
+.rule{height:1px;background:linear-gradient(90deg,var(--brass),rgba(201,160,99,0));margin:0 0 22px;width:72px}
+
+/* days */
+.days{text-align:center}
+.days .num{font:500 clamp(7rem,44vw,15rem)/.82 var(--display);letter-spacing:-.05em;font-variant-numeric:lining-nums tabular-nums;color:var(--cream);font-variation-settings:"opsz" 96}
+.days .lbl{margin-top:10px;font:italic 400 clamp(1.6rem,7.5vw,2.6rem)/1.1 var(--display);color:var(--brass)}
+.days .sub{margin-top:12px;font:500 .7rem/1.4 var(--display);letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+/* then & now */
+.tn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px;align-items:end}
+.tn figure{margin:0}
+.tn figure:first-child{margin-bottom:34px}
+.ph{overflow:hidden;background:var(--wine-2)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.tn .ph{aspect-ratio:3/4}
+.tn figcaption{margin-top:8px;font:italic 400 1.6rem/1 var(--display);color:var(--brass)}
+.tn-cap{margin-top:22px;font:400 1.25rem/1.4 var(--display);text-align:center}
+.tn-cap i{color:var(--brass)}
+
+/* booth */
+.booth{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;align-items:start}
+.booth figure{margin:0}
+.booth .strip-img{box-shadow:0 14px 28px -12px rgba(0,0,0,.65)}
+.booth figure:nth-child(1){transform:rotate(-2deg)}
+.booth figure:nth-child(2){transform:rotate(1.6deg);margin-top:26px}
+.booth figure:nth-child(3){grid-column:1/-1;width:58%;justify-self:center;transform:rotate(-1deg);margin-top:8px}
+.booth figure:nth-child(4){grid-column:1/-1;margin-top:10px}
+.cap{margin-top:10px;font:500 .64rem/1.4 var(--display);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cap i{text-transform:none;letter-spacing:0;font:italic 400 .98rem/1.3 var(--text);color:var(--cream-2);display:block;margin-top:2px}
+
+/* gallery: a magazine spread, not a grid of cards */
+.spread{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:30px}
+.spread figure{margin:0;grid-column:1/-1}
+.spread .full{margin-left:calc(-1 * var(--gut));margin-right:calc(-1 * var(--gut))}
+.spread .full .cap{padding:0 var(--gut)}
+.spread .half{grid-column:span 3}
+.spread .right{grid-column:2/-1}
+.spread .left{grid-column:1/6}
+.spread .pull{grid-column:1/-1;padding:36px 0 24px;font:italic 400 clamp(1.7rem,8vw,3rem)/1.15 var(--display);color:var(--cream);text-wrap:balance}
+.spread .pull span{color:var(--brass)}
+@media (min-width:720px){
+  .spread{gap:18px}
+  .spread .full{margin:0}
+  .spread .full .cap{padding:0}
+  .spread .right,.spread .left{grid-column:auto}
+  .spread .w4{grid-column:span 4}.spread .w2{grid-column:span 2}
+}
+
+/* letter */
+.env{margin-top:30px;position:relative}
+.env-btn{display:grid;justify-items:center;gap:16px;width:100%;padding:44px 20px 40px;border:0;cursor:pointer;
+  background:var(--cream);color:var(--ink);text-align:center;box-shadow:0 22px 40px -18px rgba(0,0,0,.7);position:relative;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.env-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 49.6%,rgba(59,12,22,.14) 50%,transparent 50.4%),linear-gradient(20deg,transparent 49.6%,rgba(59,12,22,.14) 50%,transparent 50.4%);pointer-events:none}
+.env-btn:hover{transform:translateY(-3px)}
+.env-btn .to{font:italic 400 1.9rem/1 var(--display)}
+.env-btn small{font:500 .66rem/1 var(--display);letter-spacing:.28em;text-transform:uppercase;color:var(--wine-3)}
+.env[data-open] .env-btn{display:none}
+.letter{display:grid;grid-template-rows:0fr;transition:grid-template-rows 1.2s var(--ease)}
+.env[data-open] .letter{grid-template-rows:1fr}
+.letter>div{overflow:hidden}
+.paper{background:var(--cream);color:var(--ink);padding:40px 22px 44px;box-shadow:0 22px 40px -18px rgba(0,0,0,.7);
+  background-image:radial-gradient(rgba(82,20,35,.05) 1px,transparent 1px);background-size:4px 4px}
+.paper p{margin:0 0 1.05em;max-width:62ch;font-size:1.08rem;line-height:1.7}
+.paper p.salute{font:italic 400 2rem/1 var(--display);margin-bottom:.8em;color:var(--wine-3)}
+.paper p.sign{font:italic 400 1.5rem/1.2 var(--display);color:var(--wine-3);margin:1.4em 0 0}
+.paper ::selection{background:var(--wine-3);color:var(--cream)}
+.inset{margin:6px 0 1.4em;max-width:420px}
+.inset .ph{aspect-ratio:1400/880;box-shadow:0 10px 22px -12px rgba(42,9,16,.5)}
+.inset figcaption{margin-top:8px;font:italic 400 .95rem/1.35 var(--text);color:var(--wine-3)}
+@media (min-width:720px){.paper{padding:64px 72px 70px}}
+
+/* wish */
+.wish{text-align:center}
+.cake-btn{display:block;margin:26px auto 0;border:0;background:none;padding:0;cursor:pointer;width:min(300px,82vw)}
+.cake-btn svg{width:100%;height:auto;overflow:visible}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.3s ease-in-out infinite alternate;transition:opacity .35s,transform .35s}
+.flame.b{animation-delay:-.6s}
+@keyframes flick{0%{transform:scale(1,1) rotate(-2deg)}50%{transform:scale(.92,1.08) rotate(2deg)}100%{transform:scale(1.04,.95) rotate(-1deg)}}
+.out .flame{opacity:0;transform:scale(.2,.4);animation:none}
+.smoke{opacity:0}
+.out .smoke{animation:smoke 2s var(--ease) forwards}
+@keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
+.wish-hint{margin-top:14px;font:500 .68rem/1 var(--display);letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.granted{margin-top:16px;font:italic 400 clamp(1.7rem,8vw,2.6rem)/1.15 var(--display);color:var(--brass);min-height:1.2em;opacity:0;transform:translateY(8px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.out~.granted{opacity:1;transform:none}
+
+footer{padding:110px var(--gut) calc(110px + env(safe-area-inset-bottom));text-align:center}
+footer p{font:italic 400 1.15rem/1.5 var(--display);color:var(--cream-2);max-width:30ch;margin:0 auto}
+footer .end{display:inline-block;margin-top:18px;width:10px;height:10px;background:var(--brass)}
+
+/* music pill: above the shared chicken (40/41) */
+.music{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:8px;
+  padding:8px 14px 8px 10px;border:1px solid rgba(201,160,99,.55);border-radius:999px;background:rgba(34,6,12,.82);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--cream);cursor:pointer;
+  font:500 .72rem/1 var(--text);letter-spacing:.02em;box-shadow:0 8px 18px -8px rgba(0,0,0,.6);
+  opacity:0;pointer-events:none;transition:opacity .6s var(--ease)}
+.opened .music{opacity:1;pointer-events:auto}
+.music svg{width:18px;height:18px;flex:none;color:var(--brass)}
+.music .off{display:none}
+.music[aria-pressed="true"] .on{display:none}.music[aria-pressed="true"] .off{display:block}
+.music.wait{animation:breathe 1.6s ease-in-out infinite}
+#yt{position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1}
+
+/* scroll reveal: visible by default, only enhanced with JS */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+.js .ph.rv{opacity:1;transform:none;clip-path:inset(8% 0 8% 0);transition:clip-path 1.3s var(--ease)}
+.js .ph.rv.in{clip-path:inset(0 0 0 0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .js .rv,.js .ph.rv{opacity:1;transform:none;clip-path:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js','locked')</script>
+
+<button class="gate" id="gate" aria-label="Open: for oun">
+  <span class="gate-inner">
+    <span class="seal" aria-hidden="true">P</span>
+    <h1>For oun 🤍</h1>
+    <small class="pulse">tap to open</small>
+  </span>
+</button>
+
+<main>
+  <div class="cover-stage">
+    <header class="cover" aria-label="Happy Birthday, Parika">
+      <img class="bg" src="../photos/p17.webp" width="1057" height="1400" alt="Parika in a satin dress, black and white portrait" fetchpriority="high" decoding="async">
+      <div class="strip"><span>The October Issue</span><span>09.10.2026</span><span>Priceless</span></div>
+      <h1 class="mast"><span class="hb">Happy Birthday,</span><span class="name">Parika</span></h1>
+      <div class="issue" aria-label="Issue number 24"><b>24</b><span>Nº 24<br>Collector's ed.</span></div>
+      <p class="vzh zh" lang="zh-Hans" title="shēngrì kuàilè">生日快乐</p>
+      <div class="lines">
+        <ul>
+          <li><strong><span class="js-days">232</span> days in</strong>a full report from the boyfriend desk</li>
+          <li><strong>The letter</strong>he rewrote it more times than he'll admit</li>
+        </ul>
+        <div class="barcode" aria-hidden="true">
+          <svg viewBox="0 0 62 30" preserveAspectRatio="none"><g fill="currentColor"><rect x="0" width="2" height="30"/><rect x="3" width="1" height="30"/><rect x="6" width="3" height="30"/><rect x="10" width="1" height="30"/><rect x="13" width="2" height="30"/><rect x="17" width="1" height="30"/><rect x="19" width="3" height="30"/><rect x="24" width="1" height="30"/><rect x="26" width="2" height="30"/><rect x="30" width="1" height="30"/><rect x="33" width="3" height="30"/><rect x="37" width="1" height="30"/><rect x="40" width="2" height="30"/><rect x="44" width="1" height="30"/><rect x="46" width="3" height="30"/><rect x="51" width="1" height="30"/><rect x="53" width="2" height="30"/><rect x="57" width="1" height="30"/><rect x="60" width="2" height="30"/></g></svg>
+          <span>0 9 1 0 2 0 0 2</span>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <section class="days wrap" aria-labelledby="days-h">
+    <h2 id="days-h" class="num rv"><span class="js-days">232</span></h2>
+    <p class="lbl rv">days of us</p>
+    <p class="sub rv">since 19 February 2026 · and counting</p>
+  </section>
+
+  <section class="wrap" aria-labelledby="tn-h">
+    <div class="rule"></div>
+    <h2 id="tn-h" class="h2 rv">Then <em>&amp;</em> now</h2>
+    <div class="tn">
+      <figure>
+        <div class="ph rv"><img src="../photos/p21.webp" width="646" height="860" loading="lazy" decoding="async" alt="Parika as a student, in her school uniform"></div>
+        <figcaption>Then.</figcaption>
+      </figure>
+      <figure>
+        <div class="ph rv"><img src="../photos/p16.webp" width="1057" height="1400" loading="lazy" decoding="async" alt="Parika today, sitting on a striped bench"></div>
+        <figcaption>Now.</figcaption>
+      </figure>
+    </div>
+    <p class="tn-cap rv">then: already cute. <i>now: unfairly cute.</i></p>
+  </section>
+
+  <section class="wrap" aria-labelledby="booth-h">
+    <div class="rule"></div>
+    <h2 id="booth-h" class="h2 rv">Our photo booth <em>era</em></h2>
+    <p class="dek rv">Evidence, in strips. We have a problem and we're not fixing it.</p>
+    <div class="booth">
+      <figure class="rv">
+        <img class="strip-img" src="../photos/p12.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Black and white photo booth strip, both wearing cat ears">
+        <figcaption class="cap">24.05.2026<i>cat ears, non-negotiable</i></figcaption>
+      </figure>
+      <figure class="rv">
+        <img class="strip-img" src="../photos/p14.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Six-photo booth strip titled Nostalgia, polka-dot frame">
+        <figcaption class="cap">Nostalgia.<i>six takes, one kiss, zero regrets</i></figcaption>
+      </figure>
+      <figure class="rv">
+        <img class="strip-img" src="../photos/p19.webp" width="787" height="1400" loading="lazy" decoding="async" alt="A fresh photo strip in the machine's collection tray">
+        <figcaption class="cap">14.08.2026<i>still warm from the machine</i></figcaption>
+      </figure>
+      <figure class="rv">
+        <div class="ph" style="aspect-ratio:1400/1050"><img src="../photos/p9.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Two instax polaroids of Parika on a table"></div>
+        <figcaption class="cap">Instax<i>the polaroids that didn't fit in a wallet</i></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="gal-h">
+    <div class="rule"></div>
+    <h2 id="gal-h" class="h2 rv">Portraits <em>of us</em></h2>
+    <p class="dek rv">A short feature, shot entirely on phones, mostly by me, mostly of you.</p>
+    <div class="spread">
+      <figure class="full">
+        <div class="ph rv" style="aspect-ratio:1400/1050"><img src="../photos/p5.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="The two of us on a cream sofa in a red vintage room"></div>
+        <figcaption class="cap">The red room<i>yes, this is where this page got its colours</i></figcaption>
+      </figure>
+      <figure class="half w2"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p1.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="The two of us in a booth decorated with lemon flowers"></div></figure>
+      <figure class="half w4"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p3.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Café selfie, Parika covering her mouth mid-laugh"></div></figure>
+      <p class="pull rv">“You make the most normal days feel like <span>something worth taking a picture of.</span>”</p>
+      <figure class="full w4">
+        <div class="ph rv" style="aspect-ratio:1400/1050"><img src="../photos/p7.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika in a vinyl café, looking sideways"></div>
+      </figure>
+      <figure class="right w2">
+        <div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p8.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika hiding behind an iced tea"></div>
+        <figcaption class="cap">Vinyl café<i>hiding. badly.</i></figcaption>
+      </figure>
+      <figure class="full">
+        <div class="ph rv" style="aspect-ratio:3/4;width:min(100%,69vh);margin:0 auto"><img src="../photos/p15.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="The two of us at a rooftop restaurant at night, Parika holding red roses"></div>
+        <figcaption class="cap">Rooftop, roses<i>the city showed up just to be the background</i></figcaption>
+      </figure>
+      <p class="pull rv">In <span>sampot</span>.</p>
+      <figure class="left w4">
+        <div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p26.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a traditional Khmer outfit, silver top and mauve sampot"></div>
+      </figure>
+      <figure class="half w2"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p29.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in Khmer outfit, winking with a finger pose"></div></figure>
+      <figure class="half w2"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p30.webp" width="1158" height="1400" loading="lazy" decoding="async" alt="Parika in Khmer outfit at a wedding, floral backdrop"></div></figure>
+      <figure class="half w2"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p27.webp" width="826" height="1102" loading="lazy" decoding="async" alt="Parika in a gallery, side profile in warm light"></div></figure>
+      <figure class="half w2"><div class="ph rv" style="aspect-ratio:3/4"><img src="../photos/p28.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a pink dress, eyes closed, laughing"></div></figure>
+      <figure class="full">
+        <div class="ph rv" style="aspect-ratio:1400/1050"><img src="../photos/p18.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika's selfie with a pastel flower bouquet"></div>
+        <figcaption class="cap">Flowers<i>the ones that fit in a vase</i></figcaption>
+      </figure>
+      <figure class="left w2">
+        <div class="ph rv" style="aspect-ratio:787/1400"><img src="../photos/p24.webp" width="787" height="1400" loading="lazy" decoding="async" alt="Sleepy double selfie on a pillow, one wink each"></div>
+        <figcaption class="cap">Morning edition<i>sleepy, still winking</i></figcaption>
+      </figure>
+      <figure class="full w4">
+        <div class="ph rv" style="aspect-ratio:1400/788"><img src="../photos/p22.webp" width="1400" height="788" loading="lazy" decoding="async" alt="Parika winking at the camera"></div>
+      </figure>
+      <figure class="right w2">
+        <div class="ph rv" style="aspect-ratio:1060/1400"><img src="../photos/p2.webp" width="1060" height="1400" loading="lazy" decoding="async" alt="The two of us on a cloudy mountain road trip"></div>
+        <figcaption class="cap">Road trip<i>clouds below us, snacks within reach</i></figcaption>
+      </figure>
+      <figure class="full w4">
+        <div class="ph rv" style="aspect-ratio:1400/1050"><img src="../photos/p20.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika smiling in the passenger seat of a car"></div>
+      </figure>
+      <figure class="full">
+        <div class="ph rv" style="aspect-ratio:1400/1050"><img src="../photos/p4.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="An extreme close-up of both our faces"></div>
+        <figcaption class="cap">Close-up<i>as close as we could fit, for now</i></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="letter-h">
+    <div class="rule"></div>
+    <h2 id="letter-h" class="h2 rv">A letter, <em>sealed</em></h2>
+    <div class="env" id="env">
+      <button class="env-btn" id="env-btn" aria-expanded="false" aria-controls="letter">
+        <span class="seal" aria-hidden="true">P</span>
+        <span class="to">For oun</span>
+        <small>tap to break the seal</small>
+      </button>
+      <div class="letter" id="letter">
+        <div>
+          <article class="paper" aria-label="The letter">
+            <p class="salute">Baby,</p>
+            <p>Happy 24th birthday! I wanted to give you something you can't put in a vase, so... I made you a whole website. Yes, I'm aware. You're welcome.</p>
+            <p>This is your first birthday with me, and I can't believe how lucky I am to get to celebrate it.</p>
+            <p>We've only been us since February, but somehow it already feels like I've known you way longer, in the best way. You're the first person I want to tell everything to. You make photo booths more fun, fancy dinners funnier, and the most normal days feel like something worth taking a picture of (as you can see, I took a lot).</p>
+            <p>I also want to say sorry. For the days I couldn't make you happy, and for the times I wasn't the boyfriend you deserved. I know they happened, and I'm still learning how to be better for you. Thank you for being patient with me through all of it.</p>
+            <p>And I'm sorry we're so far apart. I hate that so much of us happens through a screen, that I can't just show up with flowers or hug you after a long day. But I really believe next year can be different for us. I'm holding on to that, and to you.</p>
+            <figure class="inset">
+              <div class="ph"><img src="../photos/p25.webp" width="1400" height="880" loading="lazy" decoding="async" alt="Video call screenshot of Parika smiling"></div>
+              <figcaption>through a screen, for now. still my favourite view.</figcaption>
+            </figure>
+            <p>Thank you for laughing at my jokes, even the bad ones, for your hugs, and for being so completely, unapologetically you.</p>
+            <p>I hope 24 is soft and loud and full of everything that makes you happy. And this is only the beginning, oun: the first birthday of a hundred more that we get to spend together.</p>
+            <p>Happy birthday, baby. I love you.</p>
+            <p class="sign">Always yours 🤍</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wish wrap" aria-labelledby="wish-h">
+    <div class="rule" style="margin-inline:auto"></div>
+    <h2 id="wish-h" class="h2 rv">Make a <em>wish</em></h2>
+    <button class="cake-btn" id="cake" aria-label="Blow out the candles">
+      <svg viewBox="0 0 300 260" aria-hidden="true">
+        <!-- candles: 2 and 4 -->
+        <g class="smoke" fill="none" stroke="#d8bfa8" stroke-width="2" stroke-linecap="round"><path d="M112 40c-6-8 6-14 0-22"/><path d="M188 40c-6-8 6-14 0-22"/></g>
+        <path class="flame" d="M112 18c7 9 10 15 10 21a10 10 0 0 1-20 0c0-6 3-12 10-21z" fill="#f6c46a"/>
+        <path class="flame b" d="M188 18c7 9 10 15 10 21a10 10 0 0 1-20 0c0-6 3-12 10-21z" fill="#f6c46a"/>
+        <line x1="112" y1="50" x2="112" y2="60" stroke="#2a0910" stroke-width="2"/>
+        <line x1="188" y1="50" x2="188" y2="60" stroke="#2a0910" stroke-width="2"/>
+        <text x="112" y="122" text-anchor="middle" font-family="Bodoni Moda, Didot, serif" font-weight="700" font-size="76" fill="#c9a063" stroke="#a37c45" stroke-width="1.5">2</text>
+        <text x="188" y="122" text-anchor="middle" font-family="Bodoni Moda, Didot, serif" font-weight="700" font-size="76" fill="#c9a063" stroke="#a37c45" stroke-width="1.5">4</text>
+        <!-- cake -->
+        <rect x="58" y="122" width="184" height="58" fill="#f4e8d3"/>
+        <path d="M58 122h184v14c-10 10-18-6-27 4s-18-6-27 4-18-6-27 4-18-6-27 4-18-6-27 4-18-6-27 4-12-2-22-6z" fill="#6e1c2e"/>
+        <rect x="34" y="180" width="232" height="56" fill="#e7d6b9"/>
+        <path d="M34 180h232v12c-11 10-19-5-29 4s-19-5-29 4-19-5-29 4-19-5-29 4-19-5-29 4-19-5-29 4-19-5-29 4-14-3-29-4z" fill="#521423"/>
+        <g fill="#c9a063"><circle cx="70" cy="214" r="3"/><circle cx="110" cy="220" r="3"/><circle cx="150" cy="214" r="3"/><circle cx="190" cy="220" r="3"/><circle cx="230" cy="214" r="3"/><circle cx="96" cy="158" r="2.5"/><circle cx="150" cy="162" r="2.5"/><circle cx="204" cy="158" r="2.5"/></g>
+        <rect x="18" y="236" width="264" height="8" rx="4" fill="#a37c45"/>
+      </svg>
+    </button>
+    <p class="wish-hint" id="wish-hint">close your eyes, then tap the candles</p>
+    <p class="granted" id="granted" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer>
+  <p>made with love (and slightly too many photos) — for oun, 09.10</p>
+  <span class="end" aria-hidden="true"></span>
+</footer>
+
+<button class="music" id="music" aria-pressed="false" aria-label="Mute music: About You by The 1975">
+  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+  <span>♪ About You · tap to mute</span>
+</button>
+<div id="yt" aria-hidden="true"><div id="yt-player"></div></div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* days together, counted in local calendar days */
+  const t = new Date(), today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  const days = Math.max(0, Math.round((today - new Date(2026, 1, 19)) / 864e5));
+  document.querySelectorAll('.js-days').forEach((el) => (el.textContent = days));
+
+  /* music: YouTube IFrame API, never plays before the tap */
+  const IDS = ['4PgOJwUCdIc', 'tGv7CUutzqU'];
+  let player, ready = false, wantPlay = false, idIdx = 0, playing = false;
+  const music = $('#music');
+  function loadYT() {
+    if (window.YT || loadYT.done) return; loadYT.done = true;
+    const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+  }
+  window.onYouTubeIframeAPIReady = () => {
+    player = new YT.Player('yt-player', {
+      width: 1, height: 1, videoId: IDS[0],
+      playerVars: { playsinline: 1, controls: 0, disablekb: 1, loop: 1, playlist: IDS[0], rel: 0 },
+      events: {
+        onReady: () => { ready = true; if (wantPlay) play(); },
+        onStateChange: (e) => {
+          playing = e.data === 1;
+          if (playing) music.classList.remove('wait');
+          if (e.data === 0) player.playVideo(); // belt-and-braces loop
+        },
+        onError: () => {
+          if (idIdx < IDS.length - 1) { idIdx++; player.loadPlaylist({ playlist: [IDS[idIdx]], index: 0 }); player.setLoop(true); }
+        }
+      }
+    });
+  };
+  function play() {
+    if (!ready) { wantPlay = true; loadYT(); return; }
+    player.unMute(); player.playVideo();
+    // iOS sometimes refuses until a second tap: invite one
+    setTimeout(() => { if (!playing) music.classList.add('wait'); }, 2500);
+  }
+  // fetch the player early (after first paint) so the opening tap can start it inside the gesture
+  addEventListener('load', () => (window.requestIdleCallback || setTimeout)(loadYT, { timeout: 2500 }));
+
+  music.addEventListener('click', () => {
+    if (!ready) return;
+    if (!playing) { music.setAttribute('aria-pressed', 'false'); music.setAttribute('aria-label', 'Mute music: About You by The 1975'); music.querySelector('span').textContent = '♪ About You · tap to mute'; return play(); }
+    const muted = player.isMuted();
+    muted ? player.unMute() : player.mute();
+    music.setAttribute('aria-pressed', String(!muted));
+    music.setAttribute('aria-label', (muted ? 'Mute' : 'Unmute') + ' music: About You by The 1975');
+    music.querySelector('span').textContent = muted ? '♪ About You · tap to mute' : '🔇 muted · tap for music';
+  });
+
+  /* the gate */
+  const gate = $('#gate');
+  gate.addEventListener('click', () => {
+    play();
+    gate.classList.add('open');
+    root.classList.remove('locked');
+    document.body.classList.add('opened');
+    music.focus({ preventScroll: true });
+  }, { once: true });
+
+  /* reveals */
+  const els = document.querySelectorAll('.rv');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px' });
+    els.forEach((el) => io.observe(el));
+  } else els.forEach((el) => el.classList.add('in'));
+
+  /* the letter */
+  const env = $('#env'), envBtn = $('#env-btn');
+  envBtn.addEventListener('click', () => {
+    env.setAttribute('data-open', ''); envBtn.setAttribute('aria-expanded', 'true');
+    $('#letter .paper').setAttribute('tabindex', '-1'); $('#letter .paper').focus({ preventScroll: true });
+  });
+
+  /* the wish: confetti only loads when she blows */
+  const cake = $('#cake');
+  cake.addEventListener('click', () => {
+    if (cake.classList.contains('out')) return;
+    cake.classList.add('out'); cake.setAttribute('aria-label', 'Candles blown out');
+    $('#wish-hint').style.visibility = 'hidden';
+    $('#granted').textContent = 'wish granted (by me, mostly)';
+    if (reduce) return;
+    const fire = () => {
+      const r = cake.getBoundingClientRect();
+      const o = { x: (r.left + r.width / 2) / innerWidth, y: (r.top + r.height * .25) / innerHeight };
+      const colors = ['#c9a063', '#f4e8d3', '#6e1c2e', '#e0bd82', '#a37c45'];
+      confetti({ particleCount: 120, spread: 80, startVelocity: 42, origin: o, colors, scalar: .9, disableForReducedMotion: true });
+      setTimeout(() => confetti({ particleCount: 80, angle: 60, spread: 60, origin: { x: 0, y: .75 }, colors, disableForReducedMotion: true }), 250);
+      setTimeout(() => confetti({ particleCount: 80, angle: 120, spread: 60, origin: { x: 1, y: .75 }, colors, disableForReducedMotion: true }), 400);
+    };
+    if (window.confetti) return fire();
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';
+    s.onload = fire; document.head.appendChild(s);
+  });
+})();
+</script>
+<script src="../chicken.js" defer></script>
+</body>
+</html>

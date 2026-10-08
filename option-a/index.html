@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For oun, 09.10</title>
+<meta name="description" content="Happy 24th birthday, Parika.">
+<meta name="theme-color" content="#4a2e1c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="../photos/p16.webp" fetchpriority="high">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nanum+Pen+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap&text=%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90">
+<style>
+:root{
+  --walnut:#4a2e1c;
+  --walnut-deep:#2f1c10;
+  --paper:#efe4c9;
+  --ink:#2e1c10;
+  --lemon:#f2c631;
+  --booth:#9b1b1f;
+  --stamp:#ff8a2a;
+  --serif:"Young Serif",Georgia,serif;
+  --pen:"Nanum Pen Script","Bradley Hand",cursive;
+  --han:"ZCOOL XiaoWei","Songti SC","Noto Serif SC",serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.locked,html.locked body{overflow:hidden;height:100%}
+body{
+  margin:0;color:var(--paper);font-family:var(--serif);font-size:17px;line-height:1.55;
+  background-color:var(--walnut);
+  background-image:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 1px,transparent 1px 9px,rgba(255,220,170,.025) 9px 11px,transparent 11px 23px),
+    linear-gradient(180deg,#5a3824 0%,var(--walnut) 40%,var(--walnut-deep) 100%);
+}
+body::after{ /* film grain */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--lemon);outline-offset:3px}
+.page{overflow:hidden;position:relative}
+section{position:relative;padding:72px 20px;max-width:760px;margin:0 auto}
+h2{font-weight:400;font-size:clamp(32px,9vw,46px);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em}
+.aside{font-family:var(--pen);font-size:25px;line-height:1.1;color:var(--lemon);margin:0 0 32px;transform:rotate(-1.5deg);transform-origin:left}
+
+/* ---------- polaroid / prints ---------- */
+.pol{position:relative;margin:0;background:var(--paper);padding:9px 9px 0;color:var(--ink);
+  box-shadow:0 1px 1px rgba(0,0,0,.35),0 14px 22px -10px rgba(15,6,0,.75)}
+.pol img{width:100%;background:#cdbf9f}
+.pol figcaption{font-family:var(--pen);font-size:23px;line-height:1.05;padding:8px 3px 12px}
+.print{position:relative;margin:0;box-shadow:0 1px 1px rgba(0,0,0,.4),0 16px 24px -12px rgba(10,4,0,.8)}
+.tape::before{content:"";position:absolute;z-index:2;top:-11px;left:50%;width:78px;height:24px;
+  transform:translateX(-50%) rotate(-5deg);background:rgba(242,198,49,.62);
+  box-shadow:0 1px 2px rgba(0,0,0,.18);
+  -webkit-mask:linear-gradient(90deg,transparent 0 2px,#000 2px calc(100% - 2px),transparent 0);}
+.tape.r::before{transform:translateX(-50%) rotate(4deg);background:rgba(239,228,201,.6)}
+.stampnum{position:absolute;font-family:var(--serif);color:var(--stamp);
+  text-shadow:0 0 6px rgba(255,120,30,.75),0 0 1px #ffb070;letter-spacing:.02em;line-height:1}
+
+/* ---------- gate: the booth curtain ---------- */
+.gate{position:fixed;inset:0;z-index:45;border:0;padding:0;margin:0;width:100%;height:100vh;height:100dvh;
+  background:var(--walnut-deep);display:block;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.curtain{position:absolute;top:0;bottom:0;width:51%;
+  background:repeating-linear-gradient(90deg,#6e0f13 0,#a3201f 14px,#8a1719 26px,#5c0b0f 38px);
+  box-shadow:inset 0 -40px 60px rgba(0,0,0,.35);transition:transform 1.1s cubic-bezier(.7,0,.2,1)}
+.curtain.l{left:0}.curtain.rr{right:0}
+.awning{position:absolute;left:-2%;right:-2%;top:0;height:70px;z-index:2;
+  background:repeating-linear-gradient(90deg,var(--lemon) 0 22px,var(--paper) 22px 44px);
+  -webkit-mask:radial-gradient(circle 11px at 11px 70px,transparent 98%,#000) 0 0/22px 100%;
+          mask:radial-gradient(circle 11px at 11px 70px,transparent 98%,#000) 0 0/22px 100%;
+  box-shadow:0 6px 10px rgba(0,0,0,.3);transition:transform .7s ease .1s}
+.ticket{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);
+  background:var(--paper);color:var(--ink);padding:26px 30px 20px;min-width:220px;text-align:center;
+  box-shadow:0 18px 30px -10px rgba(0,0,0,.7);transition:opacity .4s ease,transform .6s ease}
+.ticket b{display:block;font-family:var(--pen);font-weight:400;font-size:46px;line-height:1}
+.ticket span{display:block;margin-top:10px;font-size:15px;color:var(--booth)}
+.ticket::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;transform:translateX(-50%) rotate(3deg);background:rgba(242,198,49,.7)}
+.gate.open .curtain.l{transform:translateX(-102%)}
+.gate.open .curtain.rr{transform:translateX(102%)}
+.gate.open .awning{transform:translateY(-110%)}
+.gate.open .ticket{opacity:0;transform:translate(-50%,-30%) rotate(6deg)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:56px;display:grid;grid-template-columns:1fr auto;gap:0 14px;align-items:start}
+.hero h1{font-weight:400;margin:0;font-size:clamp(54px,15.5vw,104px);line-height:.92;letter-spacing:-.02em}
+.seal{writing-mode:vertical-rl;font-family:var(--han);font-size:clamp(40px,11vw,64px);line-height:1;
+  background:var(--booth);color:var(--paper);padding:14px 8px;border-radius:4px;letter-spacing:.06em;
+  box-shadow:inset 0 0 0 3px var(--booth),inset 0 0 0 5px rgba(239,228,201,.55),0 10px 18px -8px rgba(0,0,0,.6);
+  transform:rotate(3deg);margin-top:6px}
+.hero-photo{grid-column:1 / -1;grid-row:2;position:relative;width:min(82%,380px);margin:-6px 0 0 4%;transform:rotate(-2.5deg)}
+.sticker{position:absolute;right:-26px;top:-28px;z-index:3;width:92px;height:92px;border-radius:50%;
+  background:var(--lemon);color:var(--booth);display:grid;place-items:center;font-size:46px;line-height:1;
+  transform:rotate(12deg);box-shadow:0 6px 12px -4px rgba(0,0,0,.55)}
+.sticker small{position:absolute;bottom:13px;font-family:var(--pen);font-size:17px;color:var(--ink)}
+/* the one orchestrated moment: after the curtain */
+.ready .hero h1,.ready .seal,.ready .hero-photo,.ready .sticker{animation:drop .9s cubic-bezier(.2,.8,.2,1) both}
+.ready .seal{animation-name:stamp;animation-delay:.55s;animation-duration:.45s}
+.ready .hero-photo{animation-delay:.25s}
+.ready .sticker{animation-name:stamp;animation-delay:.9s;animation-duration:.4s}
+@keyframes drop{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
+@keyframes stamp{from{opacity:0;scale:1.6}to{opacity:1;scale:1}}
+
+/* ---------- days ---------- */
+.days-photo{width:min(100%,440px);transform:rotate(1.2deg)}
+.days-photo .stampnum{right:22px;bottom:70px;font-size:clamp(64px,20vw,96px)}
+.days-photo .stampnum small{display:block;text-align:right;font-size:.3em;margin-top:4px}
+.counting{font-family:var(--pen);font-size:26px;color:var(--lemon);margin:22px 0 0}
+#tick{font-variant-numeric:tabular-nums}
+
+/* ---------- then & now ---------- */
+.tn{position:relative;min-height:470px}
+.tn .then{width:52%;transform:rotate(-4deg);position:relative;z-index:1}
+.tn .now{position:absolute;right:0;top:190px;width:72%;transform:rotate(3deg);z-index:2}
+
+/* ---------- booth era ---------- */
+.booth{display:grid;grid-template-columns:1fr 1fr;gap:26px 18px;align-items:start}
+.booth .a{transform:rotate(-2.5deg)}
+.booth .b{transform:rotate(2deg);margin-top:34px}
+.booth .c{transform:rotate(-1deg)}
+.booth .note{font-family:var(--pen);font-size:26px;line-height:1.1;color:var(--paper);align-self:center;transform:rotate(-3deg)}
+.booth .note em{font-style:normal;color:var(--lemon)}
+.booth .d{grid-column:1 / -1;transform:rotate(1deg);margin-top:8px}
+
+/* ---------- gallery ---------- */
+.grid{columns:2;column-gap:16px}
+.grid .pol{break-inside:avoid;display:inline-block;width:100%;margin:0 0 22px;padding:7px 7px 0}
+.grid .pol figcaption{font-size:20px;padding:6px 2px 10px}
+.grid .pol:nth-child(3n+1){transform:rotate(-1.8deg)}
+.grid .pol:nth-child(3n+2){transform:rotate(1.4deg)}
+.grid .pol:nth-child(3n){transform:rotate(-.5deg)}
+@media (min-width:720px){.grid{columns:3;column-gap:22px}}
+
+/* ---------- letter ---------- */
+.env{display:block;position:relative;width:min(100%,360px);aspect-ratio:3/2;margin:0 auto;border:0;padding:0;
+  background:linear-gradient(160deg,#a8241f,var(--booth) 60%,#7d1417);border-radius:4px;perspective:900px;
+  box-shadow:0 18px 30px -12px rgba(0,0,0,.75)}
+.env::after{content:"";position:absolute;inset:0;border-radius:4px;
+  background:linear-gradient(to top right,transparent 49.6%,rgba(0,0,0,.18) 50%,transparent 50.6%),
+             linear-gradient(to top left,transparent 49.6%,rgba(0,0,0,.18) 50%,transparent 50.6%)}
+.flap{position:absolute;left:0;right:0;top:0;height:58%;background:#b52a24;transform-origin:top;
+  clip-path:polygon(0 0,100% 0,50% 100%);transition:transform .7s ease;z-index:2}
+.wax{position:absolute;z-index:3;left:50%;top:58%;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ffe07a,var(--lemon) 55%,#c99a12);color:var(--booth);
+  display:grid;place-items:center;font-family:var(--pen);font-size:28px;box-shadow:0 3px 6px rgba(0,0,0,.4);transition:opacity .3s}
+.env-label{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:3;font-size:14px;color:var(--paper)}
+.env[aria-expanded="true"] .flap{transform:rotateX(180deg)}
+.env[aria-expanded="true"] .wax,.env[aria-expanded="true"] .env-label{opacity:0}
+.letter-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .9s ease}
+.letter-wrap.open{grid-template-rows:1fr}
+.letter-wrap>div{overflow:hidden}
+.letter{--lh:34px;position:relative;margin:-30px 8px 10px;padding:30px 22px 34px 30px;color:var(--ink);
+  font-family:var(--pen);font-size:25px;line-height:var(--lh);
+  background:linear-gradient(90deg,transparent 18px,rgba(155,27,31,.35) 18px 19px,transparent 19px),
+             repeating-linear-gradient(to bottom,transparent 0 calc(var(--lh) - 1px),rgba(46,28,16,.16) calc(var(--lh) - 1px) var(--lh)) 0 29px,
+             var(--paper);
+  box-shadow:0 18px 30px -14px rgba(0,0,0,.7);transform:rotate(-.6deg)}
+.letter p{margin:0 0 var(--lh);max-width:34em}
+.letter p:last-child{margin:0}
+.letter .call{float:right;width:46%;margin:6px -6px 12px 14px;transform:rotate(3deg);padding:6px 6px 0}
+.letter .call figcaption{font-size:19px;line-height:1;padding:5px 2px 8px}
+
+/* ---------- wish ---------- */
+.wish{text-align:center}
+.cake{display:block;margin:30px auto 0;border:0;background:none;padding:0;width:230px;height:250px;position:relative;-webkit-tap-highlight-color:transparent}
+.cake .plate{position:absolute;left:0;right:0;bottom:0;height:26px;border-radius:50%;background:var(--paper);box-shadow:0 10px 18px -6px rgba(0,0,0,.6)}
+.cake .body{position:absolute;left:22px;right:22px;bottom:12px;height:120px;border-radius:10px 10px 6px 6px;
+  background:linear-gradient(#f6ecd5,#e3d2ae);overflow:hidden}
+.cake .body::before{content:"";position:absolute;left:0;right:0;top:0;height:30px;
+  background:radial-gradient(circle 13px at 13px 4px,var(--booth) 97%,transparent) 0 0/26px 30px repeat-x,
+             linear-gradient(var(--booth),var(--booth)) 0 0/100% 10px no-repeat}
+.cake .num{position:absolute;left:0;right:0;bottom:16px;font-size:58px;line-height:1;color:var(--booth)}
+.candle{position:absolute;bottom:130px;width:16px;height:72px;border-radius:3px;
+  background:repeating-linear-gradient(135deg,var(--paper) 0 7px,var(--booth) 7px 13px)}
+.candle.c1{left:82px}.candle.c2{right:82px}
+.flame{position:absolute;left:50%;bottom:100%;width:18px;height:30px;margin-left:-9px;
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(ellipse at 50% 75%,#fff6c9 0 20%,var(--lemon) 45%,var(--stamp) 75%,transparent 76%);
+  filter:drop-shadow(0 0 10px rgba(255,170,40,.85));transform-origin:50% 90%;animation:flicker 1.6s ease-in-out infinite alternate;transition:opacity .25s,scale .25s}
+.c2 .flame{animation-delay:-.7s}
+@keyframes flicker{0%{rotate:-3deg;scale:1 1}50%{rotate:2deg;scale:.94 1.06}100%{rotate:-1deg;scale:1.03 .96}}
+.out .flame{opacity:0;scale:.2}
+.smoke{position:absolute;left:50%;bottom:100%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:rgba(239,228,201,.5);opacity:0}
+.out .smoke{animation:smoke 1.6s ease-out forwards}
+@keyframes smoke{0%{opacity:.8;translate:0 0;scale:1}100%{opacity:0;translate:6px -60px;scale:4}}
+.wish-msg{font-family:var(--pen);font-size:30px;color:var(--lemon);min-height:40px;margin:22px 0 0}
+
+/* ---------- footer ---------- */
+footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bottom));font-family:var(--pen);font-size:23px;line-height:1.2;color:rgba(239,228,201,.8)}
+
+/* ---------- music ---------- */
+#yt{position:fixed;width:1px;height:1px;left:0;bottom:0;opacity:0;pointer-events:none}
+.music{position:fixed;z-index:55;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;
+  border:0;border-radius:999px;padding:9px 14px 9px 10px;background:var(--paper);color:var(--ink);font-size:13px;line-height:1;
+  box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+.music[hidden]{display:none}
+.music svg{width:18px;height:18px;flex:none}
+.music .off{display:none}
+.music[aria-pressed="true"] .on{display:none}
+.music[aria-pressed="true"] .off{display:block}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .gate.open{opacity:0}
+}
+</style>
+</head>
+<body>
+<button class="gate" id="gate" type="button" aria-label="For oun. Tap to open">
+  <span class="awning" aria-hidden="true"></span>
+  <span class="curtain l" aria-hidden="true"></span>
+  <span class="curtain rr" aria-hidden="true"></span>
+  <span class="ticket"><b>For oun 🤍</b><span>tap to open</span></span>
+</button>
+
+<div class="page" id="page">
+<section class="hero" aria-labelledby="hb">
+  <h1 id="hb" tabindex="-1">Happy Birthday, Parika</h1>
+  <div class="seal" lang="zh-Hans" aria-label="生日快乐, happy birthday in Chinese">生日快乐</div>
+  <figure class="pol hero-photo tape">
+    <span class="sticker" aria-label="turning 24">24<small>today</small></span>
+    <img src="../photos/p16.webp" width="1057" height="1400" alt="Parika sitting on a striped bench in front of a wood wall" fetchpriority="high">
+    <figcaption>the birthday girl</figcaption>
+  </figure>
+</section>
+
+<section aria-labelledby="days-h">
+  <h2 id="days-h">Days of us</h2>
+  <p class="aside">since 19.02.2026</p>
+  <figure class="pol days-photo tape r">
+    <img src="../photos/p1.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Us on a bench in the lemon flower booth">
+    <span class="stampnum" aria-live="off"><span id="days">232</span><small>days</small></span>
+    <figcaption>the lemon booth</figcaption>
+  </figure>
+  <p class="counting">and counting <span id="tick"></span></p>
+</section>
+
+<section aria-labelledby="tn-h">
+  <h2 id="tn-h">Then &amp; now</h2>
+  <div class="tn">
+    <figure class="pol then tape">
+      <img src="../photos/p21.webp" width="646" height="860" loading="lazy" decoding="async" alt="Parika as a school student">
+      <figcaption>then: already cute.</figcaption>
+    </figure>
+    <figure class="pol now tape r">
+      <img src="../photos/p20.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika smiling in a car">
+      <figcaption>now: unfairly cute.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section aria-labelledby="booth-h">
+  <h2 id="booth-h">Our photo booth era</h2>
+  <p class="aside">four strips and zero regrets</p>
+  <div class="booth">
+    <figure class="print a tape"><img src="../photos/p12.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Black and white booth strip with cat ears, 2026.05.24"></figure>
+    <figure class="print b tape r"><img src="../photos/p14.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Six-photo Nostalgia booth strip with a polka-dot frame"></figure>
+    <figure class="print c tape"><img src="../photos/p19.webp" width="787" height="1400" loading="lazy" decoding="async" alt="A fresh photo strip in the booth's photo tray, 2026.08.14"></figure>
+    <p class="note">fresh out of the machine, <em>14.08</em>. still warm.</p>
+    <figure class="print d tape r"><img src="../photos/p9.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Two instax polaroids of Parika on a table"></figure>
+  </div>
+</section>
+
+<section aria-labelledby="gal-h">
+  <h2 id="gal-h">Gallery of us (and mostly you)</h2>
+  <p class="aside">I said I took a lot</p>
+  <div class="grid">
+    <figure class="pol"><img src="../photos/p3.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Selfie in a café, Parika covering her mouth"><figcaption>caught laughing</figcaption></figure>
+    <figure class="pol"><img src="../photos/p4.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Close-up of both our faces"><figcaption>too close (not complaining)</figcaption></figure>
+    <figure class="pol"><img src="../photos/p2.webp" width="1060" height="1400" loading="lazy" decoding="async" alt="Us on a cloudy mountain road trip"><figcaption>road trip clouds</figcaption></figure>
+    <figure class="pol"><img src="../photos/p28.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a pink dress laughing with eyes closed"><figcaption>laughing in pink</figcaption></figure>
+    <figure class="pol"><img src="../photos/p5.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Us on a cream sofa in a red vintage room"><figcaption>the red room</figcaption></figure>
+    <figure class="pol"><img src="../photos/p8.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika hiding behind an iced tea"><figcaption>hiding (badly)</figcaption></figure>
+    <figure class="pol"><img src="../photos/p17.webp" width="1057" height="1400" loading="lazy" decoding="async" alt="Black and white portrait of Parika in a satin dress"><figcaption>editorial, apparently</figcaption></figure>
+    <figure class="pol"><img src="../photos/p7.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika in a vinyl café looking sideways"><figcaption>vinyl café mood</figcaption></figure>
+    <figure class="pol"><img src="../photos/p15.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Us at a rooftop restaurant at night, Parika holding red roses"><figcaption>roses on a rooftop</figcaption></figure>
+    <figure class="pol"><img src="../photos/p22.webp" width="1400" height="788" loading="lazy" decoding="async" alt="Parika winking in a selfie"><figcaption>the wink</figcaption></figure>
+    <figure class="pol"><img src="../photos/p26.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a traditional Khmer outfit, silver top and mauve sampot"><figcaption>silver &amp; mauve</figcaption></figure>
+    <figure class="pol"><img src="../photos/p18.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika with a pastel flower bouquet"><figcaption>flowers, but you win</figcaption></figure>
+    <figure class="pol"><img src="../photos/p24.webp" width="787" height="1400" loading="lazy" decoding="async" alt="Two sleepy pillow selfies of Parika"><figcaption>sleepy, times two</figcaption></figure>
+    <figure class="pol"><img src="../photos/p27.webp" width="826" height="1102" loading="lazy" decoding="async" alt="Parika in a gallery, side profile"><figcaption>the best thing in the gallery</figcaption></figure>
+    <figure class="pol"><img src="../photos/p29.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a Khmer outfit winking with a finger pose"><figcaption>wink, again</figcaption></figure>
+    <figure class="pol"><img src="../photos/p30.webp" width="1158" height="1400" loading="lazy" decoding="async" alt="Parika in a Khmer outfit at a wedding in front of a floral backdrop"><figcaption>wedding guest of the year</figcaption></figure>
+  </div>
+</section>
+
+<section aria-labelledby="letter-h">
+  <h2 id="letter-h">A letter for you</h2>
+  <p class="aside">sealed with a lemon</p>
+  <button class="env" id="env" type="button" aria-expanded="false" aria-controls="letter">
+    <span class="flap" aria-hidden="true"></span>
+    <span class="wax" aria-hidden="true">oun</span>
+    <span class="env-label">tap to open the letter</span>
+  </button>
+  <div class="letter-wrap" id="letter"><div>
+    <article class="letter">
+      <p>Baby,</p>
+      <p>Happy 24th birthday! I wanted to give you something you can't put in a vase, so... I made you a whole website. Yes, I'm aware. You're welcome.</p>
+      <p>This is your first birthday with me, and I can't believe how lucky I am to get to celebrate it.</p>
+      <p>We've only been us since February, but somehow it already feels like I've known you way longer, in the best way. You're the first person I want to tell everything to. You make photo booths more fun, fancy dinners funnier, and the most normal days feel like something worth taking a picture of (as you can see, I took a lot).</p>
+      <p>I also want to say sorry. For the days I couldn't make you happy, and for the times I wasn't the boyfriend you deserved. I know they happened, and I'm still learning how to be better for you. Thank you for being patient with me through all of it.</p>
+      <figure class="pol call tape"><img src="../photos/p25.webp" width="1400" height="880" loading="lazy" decoding="async" alt="Video call screenshot of Parika smiling"><figcaption>us, through a screen</figcaption></figure>
+      <p>And I'm sorry we're so far apart. I hate that so much of us happens through a screen, that I can't just show up with flowers or hug you after a long day. But I really believe next year can be different for us. I'm holding on to that, and to you.</p>
+      <p>Thank you for laughing at my jokes, even the bad ones, for your hugs, and for being so completely, unapologetically you.</p>
+      <p>I hope 24 is soft and loud and full of everything that makes you happy. And this is only the beginning, oun: the first birthday of a hundred more that we get to spend together.</p>
+      <p>Happy birthday, baby. I love you.</p>
+      <p>Always yours 🤍</p>
+    </article>
+  </div></div>
+</section>
+
+<section class="wish" aria-labelledby="wish-h">
+  <h2 id="wish-h">Make a wish</h2>
+  <p class="aside" style="transform-origin:center">then tap the candles</p>
+  <button class="cake" id="cake" type="button" aria-label="Blow out the candles">
+    <span class="candle c1"><span class="flame"></span><span class="smoke"></span></span>
+    <span class="candle c2"><span class="flame"></span><span class="smoke"></span></span>
+    <span class="body"><span class="num">24</span></span>
+    <span class="plate"></span>
+  </button>
+  <p class="wish-msg" id="wishmsg" aria-live="polite"></p>
+</section>
+
+<footer>made with love (and slightly too many photos)<br>for oun, 09.10</footer>
+</div>
+
+<button class="music" id="music" type="button" aria-pressed="false" hidden aria-label="Mute music">
+  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.7"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+  <span>♪ About You · tap to mute</span>
+</button>
+<div id="yt" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('locked');
+
+  /* ---- days counter (calendar days since 19 Feb 2026, local date) ---- */
+  function pad(n){return (n<10?'0':'')+n}
+  function tick(){
+    var n=new Date();
+    var d=Math.round((Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())-Date.UTC(2026,1,19))/864e5);
+    $('days').textContent=d;
+    $('tick').textContent='(+'+n.getHours()+'h '+pad(n.getMinutes())+'m '+pad(n.getSeconds())+'s)';
+  }
+  tick();setInterval(tick,1000);
+
+  /* ---- music: YouTube IFrame API, loaded early so the tap can call playVideo() synchronously (iOS) ---- */
+  var IDS=['4PgOJwUCdIc','tGv7CUutzqU'],player,ready=false,wantPlay=false,triedFallback=false,muted=false;
+  function loadYT(){
+    window.onYouTubeIframeAPIReady=function(){
+      player=new YT.Player('yt',{width:1,height:1,videoId:IDS[0],
+        playerVars:{playsinline:1,controls:0,disablekb:1,fs:0,rel:0},
+        events:{
+          onReady:function(){ready=true;if(wantPlay)play()},
+          onError:function(){if(!triedFallback){triedFallback=true;player.loadVideoById(IDS[1])}},
+          onStateChange:function(e){if(e.data===0){player.seekTo(0);player.playVideo()}}
+        }});
+    };
+    var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.async=true;document.head.appendChild(s);
+  }
+  addEventListener('load',function(){(window.requestIdleCallback||setTimeout)(loadYT,{timeout:2000})});
+  function play(){if(!ready){wantPlay=true;return}player.unMute();player.playVideo()}
+
+  var music=$('music');
+  music.addEventListener('click',function(){
+    muted=!muted;
+    if(ready){ if(muted)player.mute(); else play(); } else wantPlay=!muted;
+    music.setAttribute('aria-pressed',muted);
+    music.setAttribute('aria-label',muted?'Unmute music':'Mute music');
+    music.querySelector('span').textContent=muted?'🔇 muted · tap for music':'♪ About You · tap to mute';
+  });
+
+  /* ---- gate ---- */
+  var gate=$('gate');
+  gate.addEventListener('click',function(){
+    play(); // must stay synchronous inside the tap for iOS Safari
+    gate.classList.add('open');
+    document.documentElement.classList.remove('locked');
+    $('page').classList.add('ready');
+    music.hidden=false;
+    setTimeout(function(){gate.remove();$('hb').focus({preventScroll:true})},reduce?50:1200);
+  },{once:true});
+
+  /* ---- letter ---- */
+  var env=$('env');
+  env.addEventListener('click',function(){
+    var open=env.getAttribute('aria-expanded')!=='true';
+    env.setAttribute('aria-expanded',open);
+    $('letter').classList.toggle('open',open);
+  });
+
+  /* ---- wish + confetti (lazy-loaded near the cake) ---- */
+  var cs;
+  function loadConfetti(cb){
+    if(window.confetti)return cb&&cb();
+    if(!cs){cs=document.createElement('script');cs.src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';document.head.appendChild(cs)}
+    if(cb)cs.addEventListener('load',cb);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){loadConfetti();io.disconnect()}},{rootMargin:'600px'});
+    io.observe($('cake'));
+  }
+  var cake=$('cake');
+  cake.addEventListener('click',function(){
+    if(cake.classList.contains('out'))return;
+    cake.classList.add('out');
+    cake.setAttribute('aria-label','Candles blown out');
+    $('wishmsg').textContent='wish granted (by me, mostly)';
+    loadConfetti(function(){
+      var o={colors:['#f2c631','#9b1b1f','#efe4c9','#ff8a2a'],disableForReducedMotion:true,ticks:220};
+      confetti(Object.assign({particleCount:110,spread:80,origin:{y:.65}},o));
+      setTimeout(function(){confetti(Object.assign({particleCount:60,angle:60,spread:60,origin:{x:0,y:.7}},o));confetti(Object.assign({particleCount:60,angle:120,spread:60,origin:{x:1,y:.7}},o))},250);
+    });
+  });
+
+})();
+</script>
+<script src="../chicken.js" defer></script>
+</body>
+</html>
