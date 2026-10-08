@@ -360,6 +360,9 @@ footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .paper .ln{opacity:1;transform:none}
 }
+/* skip layout/paint of off-screen sections until she scrolls near them (big first-paint win on phones) */
+main > section:not(#hero){content-visibility:auto;contain-intrinsic-size:auto 1100px}
+.cv-off main > section{content-visibility:visible}
 </style>
 </head>
 <body>
@@ -821,10 +824,14 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
   /* ---------- reveals (GSAP) ---------- */
   const startReveals = () => {
     if (!G || !window.ScrollTrigger) return;
-    ScrollTrigger.batch('.rv', {
-      start: 'top 90%', once: true,
-      onEnter: els => G.to(els, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out', stagger: .09, overwrite: true })
-    });
+    // IntersectionObserver (not ScrollTrigger.batch) so instant jumps (#family link, "back to your letter") reveal too
+    const io = new IntersectionObserver(es => {
+      const els = es.filter(e => e.isIntersecting).map(e => e.target);
+      if (!els.length) return;
+      els.forEach(e => io.unobserve(e));
+      G.to(els, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out', stagger: .09, overwrite: true });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    d.querySelectorAll('.rv').forEach(e => io.observe(e));
     addEventListener('load', () => ScrollTrigger.refresh());
   };
   if (G) G.set('.rv', { opacity: 0, y: 44, filter: 'blur(6px)' });
@@ -957,7 +964,12 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
         .add(heroIn, '-=.7');
     } else gate.remove();
     startReveals();
-    if (location.hash === '#family') setTimeout(() => $('#family').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }), G ? 1300 : 50);
+    if (location.hash === '#family') {
+      // render every section at full height first (content-visibility estimates would make the jump land short)
+      html.classList.add('cv-off');
+      const go = () => $('#family').scrollIntoView({ block: 'start' });
+      [G ? 1300 : 50, 1900].forEach(t => setTimeout(go, t));
+    }
   }, { once: true });
 
   /* ---------- before-midnight mode (Cambodia, UTC+7) ---------- */
