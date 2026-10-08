@@ -706,7 +706,10 @@ footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
 document.documentElement.classList.add('js', 'locked');
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 if (location.hash) addEventListener('load', () => scrollTo(0, 0));
-addEventListener('DOMContentLoaded', () => {
+// show the countdown straight away (before the heavier setup below) so the gate never flashes first
+if (!new URLSearchParams(location.search).has('peek') && Date.now() < Date.UTC(2026, 9, 8, 17, 0, 0)) document.getElementById('notyet').hidden = false;
+// ponytail: setup waits one frame so the first screen paints before 24 cards/gallery/ScrollTrigger are built
+addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeout(() => {
   const d = document, html = d.documentElement, $ = s => d.querySelector(s);
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const G = !RM && window.gsap ? gsap : null;
@@ -1004,7 +1007,7 @@ addEventListener('DOMContentLoaded', () => {
       if (!RM) setTimeout(() => confetti({ particleCount: 120, spread: 120, origin: { y: .55 }, colors: COLORS, shapes: ['circle'], disableForReducedMotion: true }), 350);
     }).catch(() => {});
   });
-});
+}, 0)));
 </script>
 <script src="/chicken.js" defer></script>
 <script src="/volume.js" defer></script>
