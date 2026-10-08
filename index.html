@@ -393,6 +393,7 @@ footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
 .eq span:nth-child(2){animation-delay:-.3s!important}.eq span:nth-child(3){animation-delay:-.6s!important}
 @keyframes eq{to{height:14px}}
 #yt{position:fixed;left:0;bottom:0;width:200px;height:200px;opacity:0;pointer-events:none;z-index:-1}
+#yt.show{left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);width:240px;height:135px;opacity:1;pointer-events:auto;z-index:61;border:0;border-radius:18px;box-shadow:0 18px 40px -16px rgba(59,47,40,.45)}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
@@ -746,7 +747,7 @@ main > section:not(#hero){content-visibility:auto;contain-intrinsic-size:auto 11
 <script>
 document.documentElement.classList.add('js', 'locked');
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-if (location.hash) addEventListener('load', () => scrollTo(0, 0));
+if (location.hash) addEventListener('load', () => { if (document.documentElement.classList.contains('locked')) scrollTo(0, 0); });
 // show the countdown straight away (before the heavier setup below) so the gate never flashes first
 if (!new URLSearchParams(location.search).has('peek') && Date.now() < Date.UTC(2026, 9, 8, 17, 0, 0)) document.getElementById('notyet').hidden = false;
 // ponytail: setup waits one frame so the first screen paints before 24 cards/gallery/ScrollTrigger are built
@@ -782,6 +783,7 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
   d.querySelectorAll('.flip').forEach(b => b.addEventListener('click', () => {
     const on = b.classList.toggle('on');
     b.setAttribute('aria-pressed', on);
+    b.setAttribute('aria-label', on ? b.querySelector('.back p').textContent : 'Reason ' + b.querySelector('.front b').textContent);
     b.querySelector('.back').setAttribute('aria-hidden', !on);
     b.querySelector('.front').setAttribute('aria-hidden', on);
   }));
@@ -861,7 +863,7 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
 
   /* ---------- reveals (GSAP) ---------- */
   const startReveals = () => {
-    if (!G || !window.ScrollTrigger) return;
+    if (!G) return;
     // IntersectionObserver (not ScrollTrigger.batch) so instant jumps (#family link, "back to your letter") reveal too
     const io = new IntersectionObserver(es => {
       const els = es.filter(e => e.isIntersecting).map(e => e.target);
@@ -870,7 +872,7 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
       G.to(els, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out', stagger: .09, overwrite: true });
     }, { rootMargin: '0px 0px -10% 0px' });
     d.querySelectorAll('.rv').forEach(e => io.observe(e));
-    addEventListener('load', () => ScrollTrigger.refresh());
+    if (window.ScrollTrigger) addEventListener('load', () => ScrollTrigger.refresh());
   };
   if (G) G.set('.rv', { opacity: 0, y: 44, filter: 'blur(6px)' });
 
@@ -955,15 +957,22 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
     if (d.getElementById('yt-api')) return;
     const s = d.createElement('script'); s.id = 'yt-api'; s.src = 'https://www.youtube.com/iframe_api'; d.head.appendChild(s);
   };
+  // player is built as soon as the API loads (cued, no autoplay) so the gate tap can call playVideo() inside the gesture;
+  // if a phone still blocks it, the real YouTube player is shown so one tap on its play button starts the song
+  const ytEl = () => d.getElementById('yt');
+  const fallback = on => { const f = ytEl(); if (f) f.classList.toggle('show', on); if (on) lbl.innerHTML = '▶ <i>tap the video above to play the song</i>'; };
+  const tryPlay = () => {
+    player.unMute(); muted = false; player.playVideo();
+    setTimeout(() => { if (!playing) { btn.classList.add('ask'); fallback(true); } }, 2500);
+  };
   const make = () => {
     if (player || !(window.YT && YT.Player)) return;
     player = new YT.Player('yt', {
       width: 200, height: 200, videoId: IDS[0],
-      playerVars: { autoplay: 1, playsinline: 1, controls: 0, rel: 0 },
+      playerVars: { playsinline: 1, controls: 0, rel: 0 },
       events: {
-        onReady: e => { ready = true; e.target.setVolume(70); e.target.playVideo();
-          setTimeout(() => { if (!playing) btn.classList.add('ask'); }, 2500); },
-        onStateChange: e => { if (e.data === 0) player.playVideo(); playing = e.data === 1; ui(); },
+        onReady: e => { ready = true; const v = d.querySelector('.pk-vol'); e.target.setVolume(v ? +v.value : 70); if (want) tryPlay(); },
+        onStateChange: e => { if (e.data === 0) player.playVideo(); playing = e.data === 1; if (playing) fallback(false); ui(); },
         onError: () => {
           if (!fellBack) { fellBack = true; player.loadVideoById(IDS[1]); }
           else { lbl.innerHTML = '♪ About You <i>— music unavailable</i>'; btn.classList.remove('ask'); }
@@ -971,11 +980,11 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
       }
     });
   };
-  window.onYouTubeIframeAPIReady = () => { if (want) make(); };
+  window.onYouTubeIframeAPIReady = make;
   addEventListener('load', () => (window.requestIdleCallback || setTimeout)(loadAPI, { timeout: 1200 }));
   btn.addEventListener('click', () => {
     if (!player || !ready) return;
-    if (!playing) { player.unMute(); muted = false; player.playVideo(); }
+    if (!playing) tryPlay();
     else { muted = !muted; muted ? player.mute() : player.unMute(); }
     ui();
   });
@@ -990,10 +999,13 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
 
   /* ---------- gate ---------- */
   const gate = $('#gate');
+  const lockable = [$('main'), $('footer'), btn].filter(Boolean);
+  lockable.forEach(el => el.inert = true);
   const heroIn = () => G && G.from('#hero .hi', { y: 40, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: .09 });
   gate.addEventListener('click', () => {
-    want = true; loadAPI(); make();
+    want = true; loadAPI(); make(); if (ready) tryPlay();
     html.classList.remove('locked');
+    lockable.forEach(el => el.inert = false);
     setTimeout(() => btn.classList.add('on'), 900);
     if (G) {
       G.timeline({ onComplete: () => gate.remove() })
@@ -1029,7 +1041,7 @@ addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeou
       }, 1500);
     };
     tick();
-  }
+  } else notyet.hidden = true;
 
   /* ---------- letter ---------- */
   $('#seal').addEventListener('click', e => {
