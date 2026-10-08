@@ -134,6 +134,14 @@ svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.4;stro
 @media(min-width:768px){.pol:nth-child(3n+1) .shell{transform:rotate(-1.4deg)}.pol:nth-child(3n+2) .shell{transform:rotate(1.1deg)}
   .pol .shell{transition:transform .8s var(--ease)}.pol:hover .shell{transform:rotate(0) translateY(-6px)}}
 
+/* ---------- my room ---------- */
+.room{margin:40px 0 0}
+.room .shell{--r:1.75rem}
+.room figcaption{font:italic 300 clamp(1.15rem,5vw,1.6rem)/1.35 var(--serif);margin:18px 6px 0;max-width:30ch}
+.room.tall{max-width:340px;margin:56px 0 0 auto}
+.room.tall figcaption{font-size:1.05rem}
+@media(min-width:768px){.room.tall{margin-right:8%}}
+
 /* ---------- letter ---------- */
 #letter{background:linear-gradient(180deg,var(--cream),#FCEDE8 30%,#FCEDE8 70%,var(--cream))}
 .env{margin-top:40px;max-width:640px}
@@ -187,15 +195,15 @@ footer{padding:72px 0 120px;text-align:center;color:var(--muted);font:italic 300
 footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
 
 /* ---------- music island ---------- */
-#music{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:12px;
-  border:0;border-radius:999px;padding:6px 18px 6px 6px;max-width:calc(100vw - 32px);
+#music{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:10px;
+  border:0;border-radius:999px;padding:6px 16px 6px 6px;max-width:calc(100vw - 32px);
   background:rgba(255,253,246,.72);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
   box-shadow:0 0 0 1px var(--hair),0 18px 40px -18px rgba(120,90,40,.45);
   transform:translate(-50%,140%);opacity:0;transition:transform 1s var(--ease),opacity .8s var(--ease)}
 #music.on{transform:translate(-50%,0);opacity:1}
 #music:active{transform:translate(-50%,0) scale(.97)}
 #music .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--butter);flex:none}
-#music .lbl{font:500 13px/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#music .lbl{min-width:0;flex:1 1 auto;font:500 13px/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #music .lbl i{font-style:normal;color:var(--muted)}
 #music.ask .ic{animation:pulse 1.6s var(--ease) infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(247,229,138,.5)}}
@@ -305,6 +313,23 @@ footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
     <h2 class="rv" style="--d:.08s">Us, and a lot<br>of <em>you</em>.</h2>
     <p class="lede rv" style="--d:.14s">A very small selection. The full archive would need its own server.</p>
     <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<!-- MY ROOM -->
+<section style="padding-top:24px">
+  <div class="bloom" style="width:280px;height:280px;background:var(--blush);top:120px;right:-140px"></div>
+  <div class="wrap">
+    <span class="tag rv">meanwhile, at my place</span>
+    <h2 class="rv" style="--d:.08s">My room,<br>full of <em>you</em>.</h2>
+    <figure class="room rv" style="--d:.14s">
+      <div class="shell"><div class="core"><img src="../photos/p31.webp" width="1600" height="662" alt="His desk wall covered in printed photos of Parika" loading="lazy" decoding="async"></div></div>
+      <figcaption>when I'm working, I see my motivation right in front of me.</figcaption>
+    </figure>
+    <figure class="room tall rv">
+      <div class="shell"><div class="core"><img src="../photos/p32.webp" width="1050" height="1400" alt="A second wall of printed photos of Parika by his door" loading="lazy" decoding="async"></div></div>
+      <figcaption>the wall by the door. you took that one over too.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -506,5 +531,6 @@ footer .stripes{max-width:180px;margin:0 auto 28px;height:12px}
 })();
 </script>
 <script src="../chicken.js" defer></script>
+<script src="../volume.js" defer></script>
 </body>
 </html>

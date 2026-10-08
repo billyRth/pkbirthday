@@ -192,14 +192,20 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
 
 /* ---------- music ---------- */
 #yt{position:fixed;width:1px;height:1px;left:0;bottom:0;opacity:0;pointer-events:none}
-.music{position:fixed;z-index:55;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;
-  border:0;border-radius:999px;padding:9px 14px 9px 10px;background:var(--paper);color:var(--ink);font-size:13px;line-height:1;
-  box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+.music{position:fixed;z-index:55;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);
+  display:flex;flex-direction:row;align-items:center;gap:4px;border-radius:999px;padding:0 12px 0 0;
+  background:var(--paper);color:var(--ink);font-size:13px;line-height:1;box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
 .music[hidden]{display:none}
+.music-toggle{display:flex;align-items:center;gap:8px;min-width:0;border:0;background:none;border-radius:999px;padding:9px 6px 9px 10px;white-space:nowrap}
+.music-toggle span{overflow:hidden;text-overflow:ellipsis}
 .music svg{width:18px;height:18px;flex:none}
 .music .off{display:none}
-.music[aria-pressed="true"] .on{display:none}
-.music[aria-pressed="true"] .off{display:block}
+.music-toggle[aria-pressed="true"] .on{display:none}
+.music-toggle[aria-pressed="true"] .off{display:block}
+
+/* ---------- my room ---------- */
+.room-wide{transform:rotate(-1deg)}
+.room-tall{width:min(68%,320px);margin:30px 0 0 auto;transform:rotate(2.5deg)}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
@@ -286,6 +292,19 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   </div>
 </section>
 
+<section aria-labelledby="room-h">
+  <h2 id="room-h">My room, full of you</h2>
+  <p class="aside">the walls are yours now</p>
+  <figure class="pol room-wide tape">
+    <img src="../photos/p31.webp" width="1600" height="662" loading="lazy" decoding="async" alt="His desk wall covered in printed photos of Parika">
+    <figcaption>when I'm working, I see my motivation right in front of me.</figcaption>
+  </figure>
+  <figure class="pol room-tall tape r">
+    <img src="../photos/p32.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="A second wall of printed photos of Parika by his door">
+    <figcaption>the wall by the door. you took that one over too.</figcaption>
+  </figure>
+</section>
+
 <section aria-labelledby="letter-h">
   <h2 id="letter-h">A letter for you</h2>
   <p class="aside">sealed with a lemon</p>
@@ -326,11 +345,13 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
 <footer>made with love (and slightly too many photos)<br>for oun, 09.10</footer>
 </div>
 
-<button class="music" id="music" type="button" aria-pressed="false" hidden aria-label="Mute music">
+<div class="music" id="music" hidden>
+<button class="music-toggle" type="button" aria-pressed="false" aria-label="Mute music">
   <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.7"/></svg>
   <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
   <span>♪ About You · tap to mute</span>
 </button>
+</div>
 <div id="yt" aria-hidden="true"></div>
 
 <script>
@@ -366,13 +387,13 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   addEventListener('load',function(){(window.requestIdleCallback||setTimeout)(loadYT,{timeout:2000})});
   function play(){if(!ready){wantPlay=true;return}player.unMute();player.playVideo()}
 
-  var music=$('music');
-  music.addEventListener('click',function(){
+  var music=$('music'),toggle=music.querySelector('.music-toggle');
+  toggle.addEventListener('click',function(){
     muted=!muted;
     if(ready){ if(muted)player.mute(); else play(); } else wantPlay=!muted;
-    music.setAttribute('aria-pressed',muted);
-    music.setAttribute('aria-label',muted?'Unmute music':'Mute music');
-    music.querySelector('span').textContent=muted?'🔇 muted · tap for music':'♪ About You · tap to mute';
+    toggle.setAttribute('aria-pressed',muted);
+    toggle.setAttribute('aria-label',muted?'Unmute music':'Mute music');
+    toggle.querySelector('span').textContent=muted?'🔇 muted · tap for music':'♪ About You · tap to mute';
   });
 
   /* ---- gate ---- */
@@ -421,5 +442,6 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
 })();
 </script>
 <script src="../chicken.js" defer></script>
+<script src="../volume.js" defer></script>
 </body>
 </html>
