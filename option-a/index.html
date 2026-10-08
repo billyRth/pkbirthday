@@ -9,8 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="../photos/p16.webp" fetchpriority="high">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nanum+Pen+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Delius&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap&text=%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
 <style>
 :root{
   --walnut:#4a2e1c;
@@ -20,15 +22,15 @@
   --lemon:#f2c631;
   --booth:#9b1b1f;
   --stamp:#ff8a2a;
-  --serif:"Young Serif",Georgia,serif;
-  --pen:"Nanum Pen Script","Bradley Hand",cursive;
+  --hand:"Gochi Hand","Comic Sans MS",cursive;
+  --body:"Delius","Trebuchet MS",sans-serif;
   --han:"ZCOOL XiaoWei","Songti SC","Noto Serif SC",serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 html.locked,html.locked body{overflow:hidden;height:100%}
 body{
-  margin:0;color:var(--paper);font-family:var(--serif);font-size:17px;line-height:1.55;
+  margin:0;color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.55;
   background-color:var(--walnut);
   background-image:
     repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 1px,transparent 1px 9px,rgba(255,220,170,.025) 9px 11px,transparent 11px 23px),
@@ -38,100 +40,149 @@ body::after{ /* film grain */
   content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.09;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-img{display:block;max-width:100%;height:auto}
+img,video{display:block;max-width:100%;height:auto}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--lemon);outline-offset:3px}
 .page{overflow:hidden;position:relative}
-section{position:relative;padding:72px 20px;max-width:760px;margin:0 auto}
-h2{font-weight:400;font-size:clamp(32px,9vw,46px);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em}
-.aside{font-family:var(--pen);font-size:25px;line-height:1.1;color:var(--lemon);margin:0 0 32px;transform:rotate(-1.5deg);transform-origin:left}
+section{position:relative;padding:68px 20px;max-width:760px;margin:0 auto}
+h2{font-family:var(--hand);font-weight:400;font-size:clamp(38px,11vw,56px);line-height:1.2;margin:0 0 4px}
+.aside{font-family:var(--hand);font-size:23px;line-height:1.3;color:var(--lemon);margin:0 0 30px;transform:rotate(-1.5deg);transform-origin:left}
+.center{text-align:center}
+.center .aside{transform-origin:center}
 
 /* ---------- polaroid / prints ---------- */
 .pol{position:relative;margin:0;background:var(--paper);padding:9px 9px 0;color:var(--ink);
   box-shadow:0 1px 1px rgba(0,0,0,.35),0 14px 22px -10px rgba(15,6,0,.75)}
-.pol img{width:100%;background:#cdbf9f}
-.pol figcaption{font-family:var(--pen);font-size:23px;line-height:1.05;padding:8px 3px 12px}
+.pol img,.pol video{width:100%;background:#cdbf9f}
+.pol figcaption{font-family:var(--hand);font-size:21px;line-height:1.3;padding:7px 3px 11px}
 .print{position:relative;margin:0;box-shadow:0 1px 1px rgba(0,0,0,.4),0 16px 24px -12px rgba(10,4,0,.8)}
 .tape::before{content:"";position:absolute;z-index:2;top:-11px;left:50%;width:78px;height:24px;
-  transform:translateX(-50%) rotate(-5deg);background:rgba(242,198,49,.62);
-  box-shadow:0 1px 2px rgba(0,0,0,.18);
-  -webkit-mask:linear-gradient(90deg,transparent 0 2px,#000 2px calc(100% - 2px),transparent 0);}
+  transform:translateX(-50%) rotate(-5deg);background:rgba(242,198,49,.62);box-shadow:0 1px 2px rgba(0,0,0,.18)}
 .tape.r::before{transform:translateX(-50%) rotate(4deg);background:rgba(239,228,201,.6)}
-.stampnum{position:absolute;font-family:var(--serif);color:var(--stamp);
-  text-shadow:0 0 6px rgba(255,120,30,.75),0 0 1px #ffb070;letter-spacing:.02em;line-height:1}
+.stampnum{position:absolute;font-family:var(--body);color:var(--stamp);line-height:1;
+  text-shadow:0 1px 2px rgba(40,10,0,.9),0 0 8px rgba(255,120,30,.6)}
+
+/* ---------- before-midnight screen ---------- */
+.notyet{display:none;position:fixed;inset:0;z-index:46;align-items:center;justify-content:center;padding:20px;
+  background:repeating-linear-gradient(90deg,#6e0f13 0,#a3201f 14px,#8a1719 26px,#5c0b0f 38px)}
+html.waiting .notyet{display:flex}
+.notyet .card-t{background:var(--paper);color:var(--ink);padding:28px 26px 22px;text-align:center;transform:rotate(-2deg);
+  box-shadow:0 18px 30px -10px rgba(0,0,0,.7);max-width:330px;width:100%}
+.notyet h1{font-family:var(--hand);font-weight:400;font-size:44px;line-height:1.2;margin:0}
+.notyet p{margin:8px 0 0;font-size:16px;line-height:1.4}
+.cd{display:flex;justify-content:center;gap:4px;font-size:46px;line-height:1.1;color:var(--booth);margin:10px 0 2px;font-variant-numeric:tabular-nums}
+.cd span{display:inline-block;min-width:1.25em}
+.notyet small{display:block;font-size:15px;line-height:1.4;margin-top:10px;color:#5a3a24}
 
 /* ---------- gate: the booth curtain ---------- */
 .gate{position:fixed;inset:0;z-index:45;border:0;padding:0;margin:0;width:100%;height:100vh;height:100dvh;
   background:var(--walnut-deep);display:block;overflow:hidden;-webkit-tap-highlight-color:transparent}
 .curtain{position:absolute;top:0;bottom:0;width:51%;
   background:repeating-linear-gradient(90deg,#6e0f13 0,#a3201f 14px,#8a1719 26px,#5c0b0f 38px);
-  box-shadow:inset 0 -40px 60px rgba(0,0,0,.35);transition:transform 1.1s cubic-bezier(.7,0,.2,1)}
+  box-shadow:inset 0 -40px 60px rgba(0,0,0,.35)}
 .curtain.l{left:0}.curtain.rr{right:0}
 .awning{position:absolute;left:-2%;right:-2%;top:0;height:70px;z-index:2;
   background:repeating-linear-gradient(90deg,var(--lemon) 0 22px,var(--paper) 22px 44px);
   -webkit-mask:radial-gradient(circle 11px at 11px 70px,transparent 98%,#000) 0 0/22px 100%;
-          mask:radial-gradient(circle 11px at 11px 70px,transparent 98%,#000) 0 0/22px 100%;
-  box-shadow:0 6px 10px rgba(0,0,0,.3);transition:transform .7s ease .1s}
+          mask:radial-gradient(circle 11px at 11px 70px,transparent 98%,#000) 0 0/22px 100%}
 .ticket{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);
-  background:var(--paper);color:var(--ink);padding:26px 30px 20px;min-width:220px;text-align:center;
-  box-shadow:0 18px 30px -10px rgba(0,0,0,.7);transition:opacity .4s ease,transform .6s ease}
-.ticket b{display:block;font-family:var(--pen);font-weight:400;font-size:46px;line-height:1}
-.ticket span{display:block;margin-top:10px;font-size:15px;color:var(--booth)}
+  background:var(--paper);color:var(--ink);padding:26px 30px 20px;min-width:230px;text-align:center;
+  box-shadow:0 18px 30px -10px rgba(0,0,0,.7)}
+.ticket b{display:block;font-family:var(--hand);font-weight:400;font-size:46px;line-height:1.2}
+.ticket span{display:block;margin-top:8px;font-size:16px;color:var(--booth)}
 .ticket::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;transform:translateX(-50%) rotate(3deg);background:rgba(242,198,49,.7)}
+/* CSS fallback when GSAP is missing or motion is reduced */
+.gate.open .curtain,.gate.open .awning,.gate.open .ticket{transition:transform 1s cubic-bezier(.7,0,.2,1),opacity .4s}
 .gate.open .curtain.l{transform:translateX(-102%)}
 .gate.open .curtain.rr{transform:translateX(102%)}
 .gate.open .awning{transform:translateY(-110%)}
-.gate.open .ticket{opacity:0;transform:translate(-50%,-30%) rotate(6deg)}
+.gate.open .ticket{opacity:0}
 
 /* ---------- hero ---------- */
 .hero{padding-top:56px;display:grid;grid-template-columns:1fr auto;gap:0 14px;align-items:start}
-.hero h1{font-weight:400;margin:0;font-size:clamp(54px,15.5vw,104px);line-height:.92;letter-spacing:-.02em}
+.hero h1{font-family:var(--hand);font-weight:400;margin:0;font-size:clamp(58px,17vw,110px);line-height:1.02}
 .seal{writing-mode:vertical-rl;font-family:var(--han);font-size:clamp(40px,11vw,64px);line-height:1;
   background:var(--booth);color:var(--paper);padding:14px 8px;border-radius:4px;letter-spacing:.06em;
   box-shadow:inset 0 0 0 3px var(--booth),inset 0 0 0 5px rgba(239,228,201,.55),0 10px 18px -8px rgba(0,0,0,.6);
   transform:rotate(3deg);margin-top:6px}
-.hero-photo{grid-column:1 / -1;grid-row:2;position:relative;width:min(82%,380px);margin:-6px 0 0 4%;transform:rotate(-2.5deg)}
-.sticker{position:absolute;right:-26px;top:-28px;z-index:3;width:92px;height:92px;border-radius:50%;
-  background:var(--lemon);color:var(--booth);display:grid;place-items:center;font-size:46px;line-height:1;
+.hero-photo{grid-column:1 / -1;grid-row:2;position:relative;width:min(82%,380px);margin:8px 0 0 4%;transform:rotate(-2.5deg)}
+.sticker{position:absolute;right:-26px;top:-28px;z-index:3;width:94px;height:94px;border-radius:50%;
+  background:var(--lemon);color:var(--booth);display:grid;place-items:center;font-family:var(--hand);font-size:50px;line-height:1;
   transform:rotate(12deg);box-shadow:0 6px 12px -4px rgba(0,0,0,.55)}
-.sticker small{position:absolute;bottom:13px;font-family:var(--pen);font-size:17px;color:var(--ink)}
-/* the one orchestrated moment: after the curtain */
-.ready .hero h1,.ready .seal,.ready .hero-photo,.ready .sticker{animation:drop .9s cubic-bezier(.2,.8,.2,1) both}
-.ready .seal{animation-name:stamp;animation-delay:.55s;animation-duration:.45s}
-.ready .hero-photo{animation-delay:.25s}
-.ready .sticker{animation-name:stamp;animation-delay:.9s;animation-duration:.4s}
-@keyframes drop{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
-@keyframes stamp{from{opacity:0;scale:1.6}to{opacity:1;scale:1}}
+.sticker small{position:absolute;bottom:10px;font-size:17px;color:var(--ink)}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:35px;top:20px;bottom:20px;border-left:2px dashed rgba(239,228,201,.35)}
+.tl li{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;padding:9px 0}
+.tl .mark{justify-self:center;position:relative;z-index:1}
+.tl .mark img{width:60px;background:var(--paper);padding:3px 3px 9px;box-shadow:0 6px 10px -4px rgba(0,0,0,.6);transform:rotate(-3deg)}
+.tl li:nth-child(even) .mark img{transform:rotate(3deg)}
+.tl .dot{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--booth);color:var(--paper);font-family:var(--hand);font-size:22px;line-height:1;box-shadow:0 0 0 4px var(--walnut)}
+.tl .dot.y{background:var(--lemon);color:var(--booth);font-size:26px}
+.tl .dot.chat{background:var(--paper);color:var(--ink);border-radius:50% 50% 50% 8px;font-size:24px}
+.tl .when{display:block;font-family:var(--hand);font-size:22px;line-height:1.3;color:var(--lemon)}
+.tl .what{display:block;line-height:1.4}
+.tl .sub{display:block;font-size:15px;line-height:1.4;color:#dccfb0}
 
 /* ---------- days ---------- */
 .days-photo{width:min(100%,440px);transform:rotate(1.2deg)}
-.days-photo .stampnum{right:22px;bottom:70px;font-size:clamp(64px,20vw,96px)}
+.days-photo .stampnum{right:22px;bottom:74px;font-size:clamp(60px,18vw,90px)}
 .days-photo .stampnum small{display:block;text-align:right;font-size:.3em;margin-top:4px}
-.counting{font-family:var(--pen);font-size:26px;color:var(--lemon);margin:22px 0 0}
+.counting{font-family:var(--hand);font-size:25px;line-height:1.3;color:var(--lemon);margin:22px 0 0}
 #tick{font-variant-numeric:tabular-nums}
 
 /* ---------- then & now ---------- */
-.tn{position:relative;min-height:470px}
+.tn{position:relative}
 .tn .then{width:52%;transform:rotate(-4deg);position:relative;z-index:1}
-.tn .now{position:absolute;right:0;top:190px;width:72%;transform:rotate(3deg);z-index:2}
+.tn .now{position:relative;margin:-6px 0 0 auto;width:72%;transform:rotate(3deg);z-index:2}
 
 /* ---------- booth era ---------- */
 .booth{display:grid;grid-template-columns:1fr 1fr;gap:26px 18px;align-items:start}
 .booth .a{transform:rotate(-2.5deg)}
 .booth .b{transform:rotate(2deg);margin-top:34px}
 .booth .c{transform:rotate(-1deg)}
-.booth .note{font-family:var(--pen);font-size:26px;line-height:1.1;color:var(--paper);align-self:center;transform:rotate(-3deg)}
+.booth .note{font-family:var(--hand);font-size:25px;line-height:1.3;align-self:center;transform:rotate(-3deg);margin:0}
 .booth .note em{font-style:normal;color:var(--lemon)}
 .booth .d{grid-column:1 / -1;transform:rotate(1deg);margin-top:8px}
+
+/* ---------- Khema: the red band ---------- */
+.band{background:repeating-linear-gradient(90deg,#7a1216 0,#8e1a1c 18px,#821619 34px,#6f1014 52px);
+  box-shadow:inset 0 14px 20px -12px rgba(0,0,0,.6),inset 0 -14px 20px -12px rgba(0,0,0,.6)}
+.khema .aside{color:var(--lemon)}
+.khema .pol{width:min(90%,420px);margin:0 auto;transform:rotate(-2deg)}
+.khema blockquote{margin:34px 0 0;font-size:19px;line-height:1.6;max-width:32em}
+.khema blockquote::before{content:"🌹";display:block;font-size:26px;margin-bottom:6px}
 
 /* ---------- gallery ---------- */
 .grid{columns:2;column-gap:16px}
 .grid .pol{break-inside:avoid;display:inline-block;width:100%;margin:0 0 22px;padding:7px 7px 0}
-.grid .pol figcaption{font-size:20px;padding:6px 2px 10px}
+.grid .pol figcaption{font-size:19px;padding:6px 2px 10px}
 .grid .pol:nth-child(3n+1){transform:rotate(-1.8deg)}
 .grid .pol:nth-child(3n+2){transform:rotate(1.4deg)}
 .grid .pol:nth-child(3n){transform:rotate(-.5deg)}
 @media (min-width:720px){.grid{columns:3;column-gap:22px}}
+
+/* ---------- room ---------- */
+.room-wide{transform:rotate(-1deg)}
+.room-tall{width:min(68%,320px);margin:30px 0 0 auto;transform:rotate(2.5deg)}
+
+/* ---------- 24 things ---------- */
+.things{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;list-style:none;margin:0;padding:0}
+@media (min-width:720px){.things{grid-template-columns:repeat(4,1fr)}}
+.things li{display:grid}
+.things li:nth-child(odd){rotate:-1deg}
+.things li:nth-child(even){rotate:1.2deg}
+.flip{display:grid;border:0;padding:0;background:none;perspective:900px;text-align:left;-webkit-tap-highlight-color:transparent}
+.flip .in{display:grid;grid-template-rows:1fr;transition:transform .6s cubic-bezier(.3,.7,.3,1.15);transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.flip .f,.flip .b{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:5px;min-height:118px;
+  box-shadow:0 10px 16px -8px rgba(0,0,0,.7)}
+.flip .f{display:grid;place-items:center;color:var(--paper);font-family:var(--hand);font-size:54px;line-height:1;
+  background:radial-gradient(circle 2.5px,rgba(239,228,201,.28) 98%,transparent) 0 0/14px 14px,var(--booth)}
+.flip .b{transform:rotateY(180deg);background:var(--paper);color:var(--ink);padding:12px 12px 14px;font-size:16px;line-height:1.4}
+.flip .b i{font-style:normal;display:block;font-family:var(--hand);font-size:20px;line-height:1.2;color:var(--booth)}
+.flip .b img{margin-top:8px;border-radius:2px}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
 
 /* ---------- letter ---------- */
 .env{display:block;position:relative;width:min(100%,360px);aspect-ratio:3/2;margin:0 auto;border:0;padding:0;
@@ -144,26 +195,48 @@ h2{font-weight:400;font-size:clamp(32px,9vw,46px);line-height:1.05;margin:0 0 8p
   clip-path:polygon(0 0,100% 0,50% 100%);transition:transform .7s ease;z-index:2}
 .wax{position:absolute;z-index:3;left:50%;top:58%;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#ffe07a,var(--lemon) 55%,#c99a12);color:var(--booth);
-  display:grid;place-items:center;font-family:var(--pen);font-size:28px;box-shadow:0 3px 6px rgba(0,0,0,.4);transition:opacity .3s}
-.env-label{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:3;font-size:14px;color:var(--paper)}
-.env[aria-expanded="true"] .flap{transform:rotateX(180deg)}
+  display:grid;place-items:center;font-family:var(--hand);font-size:26px;box-shadow:0 3px 6px rgba(0,0,0,.4);transition:opacity .3s}
+.env-label{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:3;font-size:15px;color:var(--paper)}
+.env[aria-expanded="true"] .flap{transform:rotateX(180deg);opacity:0;transition:transform .7s ease,opacity .25s .45s}
 .env[aria-expanded="true"] .wax,.env[aria-expanded="true"] .env-label{opacity:0}
 .letter-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .9s ease}
 .letter-wrap.open{grid-template-rows:1fr}
 .letter-wrap>div{overflow:hidden}
-.letter{--lh:34px;position:relative;margin:-30px 8px 10px;padding:30px 22px 34px 30px;color:var(--ink);
-  font-family:var(--pen);font-size:25px;line-height:var(--lh);
+.paper{--lh:30px;position:relative;color:var(--ink);font-size:17px;line-height:var(--lh);
+  padding:30px 20px 30px 30px;
   background:linear-gradient(90deg,transparent 18px,rgba(155,27,31,.35) 18px 19px,transparent 19px),
-             repeating-linear-gradient(to bottom,transparent 0 calc(var(--lh) - 1px),rgba(46,28,16,.16) calc(var(--lh) - 1px) var(--lh)) 0 29px,
+             repeating-linear-gradient(to bottom,transparent 0 calc(var(--lh) - 1px),rgba(46,28,16,.14) calc(var(--lh) - 1px) var(--lh)) 0 -4px,
              var(--paper);
-  box-shadow:0 18px 30px -14px rgba(0,0,0,.7);transform:rotate(-.6deg)}
-.letter p{margin:0 0 var(--lh);max-width:34em}
-.letter p:last-child{margin:0}
+  box-shadow:0 18px 30px -14px rgba(0,0,0,.7)}
+.paper p{margin:0 0 var(--lh);max-width:34em}
+.paper p:last-child{margin:0}
+.letter{margin:-30px 8px 10px;transform:rotate(-.6deg)}
 .letter .call{float:right;width:46%;margin:6px -6px 12px 14px;transform:rotate(3deg);padding:6px 6px 0}
-.letter .call figcaption{font-size:19px;line-height:1;padding:5px 2px 8px}
+.letter .call figcaption{font-size:17px;line-height:1.3;padding:5px 2px 8px}
+
+/* ---------- open when ---------- */
+.clocks{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin:0 0 26px;text-align:center}
+.clocks div{background:rgba(239,228,201,.08);border:1px solid rgba(239,228,201,.25);border-radius:6px;padding:10px 6px}
+.clocks b{display:block;font-weight:400;font-size:28px;line-height:1.2;font-variant-numeric:tabular-nums}
+.clocks span{display:block;font-size:14px;line-height:1.3;color:#dccfb0}
+.clocks em{font-style:normal;font-family:var(--hand);font-size:18px;line-height:1.3;color:var(--lemon)}
+.walk{width:min(64%,300px);margin:0 0 34px auto;transform:rotate(2deg)}
+.ow-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px}
+.owb{position:relative;aspect-ratio:5/4;border:0;border-radius:4px;padding:0;overflow:hidden;display:flex;align-items:flex-end;
+  background:linear-gradient(160deg,#a8241f,var(--booth) 60%,#7d1417);color:var(--paper);
+  box-shadow:0 12px 18px -10px rgba(0,0,0,.75)}
+.owb:nth-child(odd){rotate:-1.5deg}.owb:nth-child(even){rotate:1.5deg}
+.owb::before{content:"";position:absolute;left:0;right:0;top:0;height:40%;background:#b52a24;clip-path:polygon(0 0,100% 0,50% 100%)}
+.owb span{position:relative;padding:0 10px 10px;font-family:var(--hand);font-size:19px;line-height:1.2;text-align:left}
+dialog.ow{border:0;padding:0;background:transparent;width:min(92vw,520px);max-width:none;max-height:86vh;overflow:visible;color:var(--ink)}
+dialog.ow::backdrop{background:rgba(25,12,4,.75)}
+.ow .paper{max-height:82vh;overflow:auto;transform:rotate(-.6deg)}
+.ow h3{font-family:var(--hand);font-weight:400;font-size:26px;line-height:var(--lh);margin:0 0 var(--lh);color:var(--booth);padding-right:60px}
+.ow .x{position:absolute;top:10px;right:10px;z-index:2;border:0;border-radius:999px;background:var(--ink);color:var(--paper);font-size:14px;padding:8px 12px;line-height:1}
+.ow .exhibit{width:60%;margin:0 0 var(--lh);transform:rotate(-2deg);padding:6px 6px 0}
+.ow .exhibit figcaption{font-size:17px}
 
 /* ---------- wish ---------- */
-.wish{text-align:center}
 .cake{display:block;margin:30px auto 0;border:0;background:none;padding:0;width:230px;height:250px;position:relative;-webkit-tap-highlight-color:transparent}
 .cake .plate{position:absolute;left:0;right:0;bottom:0;height:26px;border-radius:50%;background:var(--paper);box-shadow:0 10px 18px -6px rgba(0,0,0,.6)}
 .cake .body{position:absolute;left:22px;right:22px;bottom:12px;height:120px;border-radius:10px 10px 6px 6px;
@@ -171,30 +244,56 @@ h2{font-weight:400;font-size:clamp(32px,9vw,46px);line-height:1.05;margin:0 0 8p
 .cake .body::before{content:"";position:absolute;left:0;right:0;top:0;height:30px;
   background:radial-gradient(circle 13px at 13px 4px,var(--booth) 97%,transparent) 0 0/26px 30px repeat-x,
              linear-gradient(var(--booth),var(--booth)) 0 0/100% 10px no-repeat}
-.cake .num{position:absolute;left:0;right:0;bottom:16px;font-size:58px;line-height:1;color:var(--booth)}
+.cake .num{position:absolute;left:0;right:0;bottom:12px;font-family:var(--hand);font-size:62px;line-height:1;color:var(--booth)}
 .candle{position:absolute;bottom:130px;width:16px;height:72px;border-radius:3px;
   background:repeating-linear-gradient(135deg,var(--paper) 0 7px,var(--booth) 7px 13px)}
 .candle.c1{left:82px}.candle.c2{right:82px}
 .flame{position:absolute;left:50%;bottom:100%;width:18px;height:30px;margin-left:-9px;
   border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
   background:radial-gradient(ellipse at 50% 75%,#fff6c9 0 20%,var(--lemon) 45%,var(--stamp) 75%,transparent 76%);
-  filter:drop-shadow(0 0 10px rgba(255,170,40,.85));transform-origin:50% 90%;animation:flicker 1.6s ease-in-out infinite alternate;transition:opacity .25s,scale .25s}
+  transform-origin:50% 90%;animation:flicker 1.6s ease-in-out infinite alternate;transition:opacity .25s,scale .25s}
 .c2 .flame{animation-delay:-.7s}
 @keyframes flicker{0%{rotate:-3deg;scale:1 1}50%{rotate:2deg;scale:.94 1.06}100%{rotate:-1deg;scale:1.03 .96}}
 .out .flame{opacity:0;scale:.2}
 .smoke{position:absolute;left:50%;bottom:100%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:rgba(239,228,201,.5);opacity:0}
 .out .smoke{animation:smoke 1.6s ease-out forwards}
 @keyframes smoke{0%{opacity:.8;translate:0 0;scale:1}100%{opacity:0;translate:6px -60px;scale:4}}
-.wish-msg{font-family:var(--pen);font-size:30px;color:var(--lemon);min-height:40px;margin:22px 0 0}
+.wish-msg{font-family:var(--hand);font-size:30px;line-height:1.3;color:var(--lemon);min-height:40px;margin:22px 0 0}
+
+/* ---------- family letter ---------- */
+.family{padding-top:40px}
+.formal{position:relative;background:var(--paper);color:var(--ink);padding:44px 24px 34px;
+  box-shadow:0 18px 30px -14px rgba(0,0,0,.7)}
+.formal::before{content:"";position:absolute;inset:8px;border:1.5px solid rgba(155,27,31,.45);outline:1px solid rgba(155,27,31,.25);outline-offset:-6px;pointer-events:none}
+.formal h2{color:var(--booth);font-size:clamp(32px,9vw,46px);text-align:center;margin:0 0 6px}
+.formal .lead{text-align:center;font-size:15px;line-height:1.4;color:#5a3a24;margin:0 0 26px}
+.formal .print{width:120px;margin:0 auto 26px;transform:rotate(-2deg);padding:5px 5px 14px;background:#fff8ea}
+.formal p{font-size:17px;line-height:1.7;margin:0 0 1.1em}
+.formal .plea{font-family:var(--hand);font-size:25px;line-height:1.35;color:var(--booth);text-align:center;margin:1.2em 0}
+.formal .sign{margin-top:1.6em;text-align:right}
+.formal{max-width:680px;margin:0 auto}
+.formal p{max-width:60ch;margin-left:auto;margin-right:auto}
+.more summary{display:block;width:max-content;margin:4px auto 0;cursor:pointer;list-style:none;border-radius:999px;
+  background:var(--booth);color:var(--paper);font-size:16px;line-height:1.3;padding:10px 20px}
+.more summary::-webkit-details-marker{display:none}
+.more[open] summary{display:none}
+
+.lock{text-align:center;padding:6px 0 4px}
+.lock-q{font-size:17px;line-height:1.5}
+.formal .lock-ask{font-family:var(--hand);font-size:32px;line-height:1.3;color:var(--booth);margin:6px auto 18px!important}
+.lock-btns{display:flex;flex-direction:column;gap:10px;align-items:center}
+.lock button{border:0;border-radius:999px;font-size:16px;line-height:1.3;padding:11px 20px;min-width:230px}
+#fam-yes{background:var(--lemon);color:var(--ink)}
+#fam-no,.lock-go{background:var(--booth);color:var(--paper)}
 
 /* ---------- footer ---------- */
-footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bottom));font-family:var(--pen);font-size:23px;line-height:1.2;color:rgba(239,228,201,.8)}
+footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bottom));font-family:var(--hand);font-size:23px;line-height:1.35;color:#dccfb0}
 
 /* ---------- music ---------- */
 #yt{position:fixed;width:1px;height:1px;left:0;bottom:0;opacity:0;pointer-events:none}
 .music{position:fixed;z-index:55;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);
   display:flex;flex-direction:row;align-items:center;gap:4px;border-radius:999px;padding:0 12px 0 0;
-  background:var(--paper);color:var(--ink);font-size:13px;line-height:1;box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+  background:var(--paper);color:var(--ink);font-size:13px;line-height:1.3;box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
 .music[hidden]{display:none}
 .music-toggle{display:flex;align-items:center;gap:8px;min-width:0;border:0;background:none;border-radius:999px;padding:9px 6px 9px 10px;white-space:nowrap}
 .music-toggle span{overflow:hidden;text-overflow:ellipsis}
@@ -203,17 +302,26 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
 .music-toggle[aria-pressed="true"] .on{display:none}
 .music-toggle[aria-pressed="true"] .off{display:block}
 
-/* ---------- my room ---------- */
-.room-wide{transform:rotate(-1deg)}
-.room-tall{width:min(68%,320px);margin:30px 0 0 auto;transform:rotate(2.5deg)}
-
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
-  .gate.open{opacity:0}
 }
 </style>
 </head>
 <body>
+<div class="notyet" id="notyet" role="timer" aria-label="Countdown to your birthday">
+  <div class="card-t">
+    <h1>Not yet, oun 👀</h1>
+    <p>your birthday starts in</p>
+    <div class="cd" aria-live="off"><span id="cd-h">00</span>:<span id="cd-m">00</span>:<span id="cd-s">00</span></div>
+    <small>(Cambodia time. no peeking 🙈)</small>
+  </div>
+</div>
+<script>
+  /* decide before first paint: 9 Oct 2026 00:00 in Cambodia (UTC+7) */
+  window.BDAY=Date.UTC(2026,9,8,17,0,0);
+  if(Date.now()<BDAY && !new URLSearchParams(location.search).has('peek'))document.documentElement.classList.add('waiting');
+</script>
+
 <button class="gate" id="gate" type="button" aria-label="For oun. Tap to open">
   <span class="awning" aria-hidden="true"></span>
   <span class="curtain l" aria-hidden="true"></span>
@@ -232,12 +340,33 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   </figure>
 </section>
 
+<section aria-labelledby="tl-h">
+  <h2 id="tl-h">How it started</h2>
+  <p class="aside">the short version</p>
+  <ol class="tl">
+    <li><span class="mark"><span class="dot chat" aria-hidden="true">…</span></span>
+      <span><span class="what">one simple text on Instagram</span><span class="sub">best message I ever sent</span></span></li>
+    <li><span class="mark"><span class="dot" aria-hidden="true">♥</span></span>
+      <span><span class="when">19.02.2026</span><span class="what">us</span></span></li>
+    <li><span class="mark"><img src="../photos/p12.webp" width="933" height="1400" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="when">24.05.2026</span><span class="what">cat ears, photo booth</span></span></li>
+    <li><span class="mark"><img src="../photos/p19.webp" width="787" height="1400" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="when">14.08.2026</span><span class="what">photo booth, round two</span></span></li>
+    <li><span class="mark"><img src="../photos/p15.webp" width="1050" height="1400" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="what">the date at Khema 🌹</span><span class="sub">still my favorite memory</span></span></li>
+    <li><span class="mark"><img src="../photos/p25.webp" width="1400" height="880" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="when">Tokyo ↔ Phnom Penh</span><span class="what">4,408 km, 2 hours apart, one screen between us</span></span></li>
+    <li><span class="mark"><span class="dot y" aria-hidden="true">24</span></span>
+      <span><span class="when">09.10.2026</span><span class="what">your first birthday with me</span></span></li>
+  </ol>
+</section>
+
 <section aria-labelledby="days-h">
   <h2 id="days-h">Days of us</h2>
   <p class="aside">since 19.02.2026</p>
   <figure class="pol days-photo tape r">
     <img src="../photos/p1.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Us on a bench in the lemon flower booth">
-    <span class="stampnum" aria-live="off"><span id="days">232</span><small>days</small></span>
+    <span class="stampnum"><span id="days">232</span><small>days</small></span>
     <figcaption>the lemon booth</figcaption>
   </figure>
   <p class="counting">and counting <span id="tick"></span></p>
@@ -269,6 +398,18 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   </div>
 </section>
 
+<div class="band">
+<section class="khema" aria-labelledby="khema-h">
+  <h2 id="khema-h">The date at Khema</h2>
+  <p class="aside">our favorite memory</p>
+  <figure class="pol tape">
+    <img src="../photos/p15.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Us at Khema's rooftop at night, Parika holding red roses">
+    <figcaption>Khema, red roses, you</figcaption>
+  </figure>
+  <blockquote>Our date at Khema. The city lights, the red roses, and you holding them like you didn't know you were the prettiest thing in the room. If I could replay one night, it's that one.</blockquote>
+</section>
+</div>
+
 <section aria-labelledby="gal-h">
   <h2 id="gal-h">Gallery of us (and mostly you)</h2>
   <p class="aside">I said I took a lot</p>
@@ -277,15 +418,20 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     <figure class="pol"><img src="../photos/p4.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Close-up of both our faces"><figcaption>too close (not complaining)</figcaption></figure>
     <figure class="pol"><img src="../photos/p2.webp" width="1060" height="1400" loading="lazy" decoding="async" alt="Us on a cloudy mountain road trip"><figcaption>road trip clouds</figcaption></figure>
     <figure class="pol"><img src="../photos/p28.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a pink dress laughing with eyes closed"><figcaption>laughing in pink</figcaption></figure>
+    <figure class="pol"><img src="../photos/p41.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Him hugging Parika from behind at a café counter"><figcaption>my favorite place to be</figcaption></figure>
     <figure class="pol"><img src="../photos/p5.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Us on a cream sofa in a red vintage room"><figcaption>the red room</figcaption></figure>
     <figure class="pol"><img src="../photos/p8.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika hiding behind an iced tea"><figcaption>hiding (badly)</figcaption></figure>
     <figure class="pol"><img src="../photos/p17.webp" width="1057" height="1400" loading="lazy" decoding="async" alt="Black and white portrait of Parika in a satin dress"><figcaption>editorial, apparently</figcaption></figure>
+    <figure class="pol"><video id="clip" width="360" height="640" muted loop playsinline preload="none" poster="../photos/v1-poster.jpg" aria-label="Short clip of Parika playing with face filters"><source src="../photos/v1.mp4" type="video/mp4"></video><figcaption>a short film starring my favorite person</figcaption></figure>
     <figure class="pol"><img src="../photos/p7.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika in a vinyl café looking sideways"><figcaption>vinyl café mood</figcaption></figure>
-    <figure class="pol"><img src="../photos/p15.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Us at a rooftop restaurant at night, Parika holding red roses"><figcaption>roses on a rooftop</figcaption></figure>
+    <figure class="pol"><img src="../photos/p33.webp" width="885" height="1400" loading="lazy" decoding="async" alt="Parika's selfie with a strawberry and puppy-ear filter"><figcaption>strawberry, puppy, you</figcaption></figure>
     <figure class="pol"><img src="../photos/p22.webp" width="1400" height="788" loading="lazy" decoding="async" alt="Parika winking in a selfie"><figcaption>the wink</figcaption></figure>
+    <figure class="pol"><img src="../photos/p37.webp" width="828" height="552" loading="lazy" decoding="async" alt="Parika at Angkor Wat"><figcaption>Angkor Wat, and still you're the view</figcaption></figure>
     <figure class="pol"><img src="../photos/p26.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a traditional Khmer outfit, silver top and mauve sampot"><figcaption>silver &amp; mauve</figcaption></figure>
     <figure class="pol"><img src="../photos/p18.webp" width="1400" height="1050" loading="lazy" decoding="async" alt="Parika with a pastel flower bouquet"><figcaption>flowers, but you win</figcaption></figure>
+    <figure class="pol"><img src="../photos/p34.webp" width="508" height="1280" loading="lazy" decoding="async" alt="Parika's selfie with a dog-ear filter"><figcaption>the puppy era</figcaption></figure>
     <figure class="pol"><img src="../photos/p24.webp" width="787" height="1400" loading="lazy" decoding="async" alt="Two sleepy pillow selfies of Parika"><figcaption>sleepy, times two</figcaption></figure>
+    <figure class="pol"><img src="../photos/p38.webp" width="1280" height="720" loading="lazy" decoding="async" alt="Four sleepy selfies of Parika, one with a wink"><figcaption>sleepy, wink, repeat</figcaption></figure>
     <figure class="pol"><img src="../photos/p27.webp" width="826" height="1102" loading="lazy" decoding="async" alt="Parika in a gallery, side profile"><figcaption>the best thing in the gallery</figcaption></figure>
     <figure class="pol"><img src="../photos/p29.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a Khmer outfit winking with a finger pose"><figcaption>wink, again</figcaption></figure>
     <figure class="pol"><img src="../photos/p30.webp" width="1158" height="1400" loading="lazy" decoding="async" alt="Parika in a Khmer outfit at a wedding in front of a floral backdrop"><figcaption>wedding guest of the year</figcaption></figure>
@@ -305,6 +451,12 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   </figure>
 </section>
 
+<section aria-labelledby="things-h">
+  <h2 id="things-h">24 things I love about you</h2>
+  <p class="aside">tap a card to flip it</p>
+  <ol class="things" id="things"></ol>
+</section>
+
 <section aria-labelledby="letter-h">
   <h2 id="letter-h">A letter for you</h2>
   <p class="aside">sealed with a lemon</p>
@@ -314,25 +466,67 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     <span class="env-label">tap to open the letter</span>
   </button>
   <div class="letter-wrap" id="letter"><div>
-    <article class="letter">
+    <article class="paper letter">
       <p>Baby,</p>
       <p>Happy 24th birthday! I wanted to give you something you can't put in a vase, so... I made you a whole website. Yes, I'm aware. You're welcome.</p>
       <p>This is your first birthday with me, and I can't believe how lucky I am to get to celebrate it.</p>
+      <p>Can I tell you something I don't think I've ever said properly? You are my first girlfriend. Ever. Before you, I didn't really know what any of this felt like: waiting for one person's message, smiling at my phone like an idiot, wanting to tell someone about every small thing in my day. You were my first for all of it. And I'll be honest with you, oun: I hope you're also my last. I don't want to learn how to love anyone else. I just want to keep learning how to love you better.</p>
+      <p>It all started with one simple text on Instagram. I still think about that sometimes. One small message, and somehow it turned into you, into us, into the best thing that has ever happened to me.</p>
       <p>We've only been us since February, but somehow it already feels like I've known you way longer, in the best way. You're the first person I want to tell everything to. You make photo booths more fun, fancy dinners funnier, and the most normal days feel like something worth taking a picture of (as you can see, I took a lot).</p>
-      <p>I also want to say sorry. For the days I couldn't make you happy, and for the times I wasn't the boyfriend you deserved. I know they happened, and I'm still learning how to be better for you. Thank you for being patient with me through all of it.</p>
+      <p>I love you when you laugh. I love you when you complain in that cute little voice. I love you when you study with that serious face, when you try your best, and when you finally get it. Honestly, I love you just for existing, my cheeky cheeks dumpling.</p>
+      <p>I still think about our date at Khema. The city lights, the red roses, and you. If I could replay one night forever, it would be that one.</p>
+      <p>I also want to say sorry. For the days I couldn't make you happy, and for the times I wasn't the boyfriend you deserved. I know they happened, and I'm not going to pretend they didn't. You're my first, so I'm still learning, and sometimes I learn slowly. But I promise I'm trying, every single day, to be better for you. Thank you for being patient with me through all of it, and for not giving up on me when I got it wrong.</p>
       <figure class="pol call tape"><img src="../photos/p25.webp" width="1400" height="880" loading="lazy" decoding="async" alt="Video call screenshot of Parika smiling"><figcaption>us, through a screen</figcaption></figure>
-      <p>And I'm sorry we're so far apart. I hate that so much of us happens through a screen, that I can't just show up with flowers or hug you after a long day. But I really believe next year can be different for us. I'm holding on to that, and to you.</p>
-      <p>Thank you for laughing at my jokes, even the bad ones, for your hugs, and for being so completely, unapologetically you.</p>
-      <p>I hope 24 is soft and loud and full of everything that makes you happy. And this is only the beginning, oun: the first birthday of a hundred more that we get to spend together.</p>
-      <p>Happy birthday, baby. I love you.</p>
+      <p>And I'm sorry we're so far apart. Tokyo to Phnom Penh, 4,408 km, two hours apart. I hate that so much of us happens through a screen, that I can't just show up with flowers or hug you after a long day, or sit next to you and steal your food. Some nights that distance feels really heavy. But every time I see your face on a call, I'm reminded why it's worth it. I really believe next year can be different for us. I'm holding on to that, and to you.</p>
+      <p>Can I tell you a secret? I'm crying a little bit while I make this. Just knowing I can't be next to you whenever I want, on your birthday of all days. But it's worth it, baby. You're worth it. These are tears of love, and I'm happy to cry every single one of them for you.</p>
+      <p>Thank you for laughing at my jokes, even the bad ones, for your hugs, for your patience, for every "goodnight" and every "did you eat yet?", and for being so completely, unapologetically you.</p>
+      <p>I hope 24 is soft and loud and full of everything that makes you happy. I hope it's kind to you, because you deserve kindness more than anyone I know. And whatever this year brings, good or hard, I want you to know you won't face any of it alone. Not while I'm here.</p>
+      <p>You were my first. I hope you'll be my only. And this is only the beginning, oun: the first birthday of a hundred more that we get to spend together.</p>
+      <p>Happy birthday, baby. I love you, more than this whole website can say.</p>
       <p>Always yours 🤍</p>
     </article>
   </div></div>
 </section>
 
-<section class="wish" aria-labelledby="wish-h">
+<section aria-labelledby="ow-h">
+  <h2 id="ow-h">Open when…</h2>
+  <p class="aside">for the days I can't be there</p>
+  <div class="clocks">
+    <div><b id="clk-pp">--:--</b><span>Phnom Penh</span></div>
+    <em>4,408 km</em>
+    <div><b id="clk-tk">--:--</b><span>Tokyo</span></div>
+  </div>
+  <figure class="pol walk tape r">
+    <img src="../photos/p40.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Holding hands on a night walk, a lit tower in the sky">
+    <figcaption>walking behind you, always</figcaption>
+  </figure>
+  <div class="ow-grid">
+    <button class="owb" type="button" data-ow="miss"><span>Open when you miss me</span></button>
+    <button class="owb" type="button" data-ow="sad"><span>Open when you're sad</span></button>
+    <button class="owb" type="button" data-ow="sleep"><span>Open when you can't sleep</span></button>
+    <button class="owb" type="button" data-ow="fight"><span>Open when we fight</span></button>
+    <button class="owb" type="button" data-ow="laugh"><span>Open when you need a laugh</span></button>
+    <button class="owb" type="button" data-ow="study"><span>Open when studying is too much</span></button>
+  </div>
+</section>
+
+<dialog class="ow" id="ow" aria-labelledby="ow-title">
+  <article class="paper">
+    <button class="x" type="button" id="ow-close">Close</button>
+    <h3 id="ow-title"></h3>
+    <div id="ow-body"></div>
+  </article>
+</dialog>
+<template id="t-miss"><p>Look at the wall behind me on our next call. Every photo of you is still there, and I'm probably looking at them right now. Distance is just a number on a map; you're still the first person I think about in the morning (2 hours before you even wake up). Call me. Even if it's late. Especially if it's late.</p></template>
+<template id="t-sad"><p>Hey, dumpling. Whatever it is, you don't have to carry it alone. Text me the long version, the messy version, the 'I don't even know why' version. I'll listen to all of it. And then I'll remind you how strong you are, because you are.</p></template>
+<template id="t-sleep"><p>Close your eyes and imagine me next to you, stealing the blanket. Breathe in for four, out for four. Think of the lemon booth, the cat ears, Khema. Still awake? Text me. I'm probably awake too, thinking about you.</p></template>
+<template id="t-fight"><p>I'm sorry, even if it was a little bit your fault (kidding... mostly). No fight is bigger than us. Let's take a breath, say what we feel, and then you can complain in your cute voice and I'll lose immediately.</p></template>
+<template id="t-laugh"><p>Exhibit A:</p><figure class="pol exhibit"><img src="../photos/p23.webp" width="734" height="734" alt="Parika's face edited onto a fried chicken drumstick"></figure><p>You're welcome. Now smile, that's an order.</p></template>
+<template id="t-study"><p>You've already done hard things. You graduated, remember? Take a break, drink some water, eat something (fried chicken counts). Then go back and try your best, like you always do. I'm so proud of you.</p></template>
+
+<section class="center" aria-labelledby="wish-h">
   <h2 id="wish-h">Make a wish</h2>
-  <p class="aside" style="transform-origin:center">then tap the candles</p>
+  <p class="aside">then tap the candles</p>
   <button class="cake" id="cake" type="button" aria-label="Blow out the candles">
     <span class="candle c1"><span class="flame"></span><span class="smoke"></span></span>
     <span class="candle c2"><span class="flame"></span><span class="smoke"></span></span>
@@ -340,6 +534,46 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     <span class="plate"></span>
   </button>
   <p class="wish-msg" id="wishmsg" aria-live="polite"></p>
+</section>
+
+<section class="family" id="family" aria-labelledby="family-h">
+  <article class="formal">
+    <figure class="print"><img src="../photos/p26.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Parika in a traditional Khmer outfit"></figure>
+    <h2 id="family-h">To Parika's family &amp; friends</h2>
+    <p class="lead">a second letter, for the people around her</p>
+    <div class="lock" id="fam-lock">
+      <p class="lock-q">This letter isn't for the birthday girl 🤫</p>
+      <p class="lock-ask">Are you Parika?</p>
+      <div class="lock-btns" id="fam-btns">
+        <button type="button" id="fam-yes">Yes, it's me</button>
+        <button type="button" id="fam-no">No, I'm family / a friend</button>
+      </div>
+      <div id="fam-nope" hidden>
+        <p class="lock-q">Nice try, birthday girl 🙈 This one is for the people who love you. Go read YOUR letter instead 💌</p>
+        <button type="button" class="lock-go" id="fam-go">Take me to my letter</button>
+      </div>
+    </div>
+    <div id="fam-body"></div>
+    <template id="t-family">
+    <p>To Parika's family and friends,</p>
+    <p>Hello. Some of you might not know me very well, and some of you not at all, so let me introduce myself first: I'm the boy in Tokyo who is completely in love with Parika. I made this whole page for her birthday, and I wanted to save one little corner of it for you, the people who get to be near her when I can't.</p>
+    <p>So this is me, asking you very nicely, with both hands together 🙏</p>
+    <p class="plea">Please be kind to her. Please take care of her.</p>
+    <details class="more"><summary>Keep reading</summary>
+    <p>Parika has been through a lot, more than she usually lets people see. She's the kind of person who smiles in every photo and winks at the camera, even on the days when things feel heavy inside. She will tell you she's fine. She will laugh it off. She will make sure everyone else is okay first. But sometimes she isn't fine, and she won't always say it. So please look a little closer. Please notice.</p>
+    <p>I'm 4,408 km away, in Tokyo. There are so many days I wish I could just be there: to sit next to her, to make sure she has eaten, to make her laugh when she's sad, to hold her hand when a day goes wrong. I call, I text, I try my best from here, but a phone screen can't give her a hug. I can't be there, not yet. But you can. And that's why I'm writing to you.</p>
+    <p>I know everyone is busy. Work, school, family, life. I really do understand, and I'm not asking for anything big. But please, don't leave her out. Invite her, even when you think she might say no. Save her a seat. Send her a small message just to check on her, even a silly sticker is enough. Sit with her a little longer. Ask her how she really is, and wait for the real answer. Those small things mean everything to her, even when she doesn't say it out loud.</p>
+    <p>To her friends: take her out. Drag her into photo booths, make her wear the cat ears, buy her fried chicken (it's her love language, trust me). Laugh with her until her cheeks hurt. When she's stressed about studying or work, remind her how far she has already come. She graduated from Dali University, far away from home, in another country and another language. That took so much courage, and she did it. She is stronger than she thinks.</p>
+    <p>To her family: thank you for raising someone so kind. Everything good I see in her, the way she cares, the way she tries her best, the way she still smiles when things are hard, she learned somewhere, and I know a lot of it came from you. Please keep reminding her that she is loved at home, that she is never a burden, and that she can always come to you.</p>
+    <p>And if she has ever been wrong, if she ever hurt someone, said something she shouldn't have, or let anyone down, then I'm sorry, from me, on her behalf. Please forgive her. Nobody is perfect, and she is still learning, just like all of us. But she has the softest heart. She tries her best at everything she does, and she cares about the people around her more than she knows how to show.</p>
+    <p>She is my first girlfriend ever, and I hope with all my heart that she will be my last. She is the sweetest girl in my life. When she laughs, everything feels lighter. When she complains in that cute little voice, I can't even pretend to be annoyed. She deserves to be happy. Not just today, but every day after this one.</p>
+    <p>And here is my promise to all of you: I will take care of her too, with everything I have, from wherever I am. I will treat her right. I will be patient with her, and honest with her, and I will keep choosing her. I hope that one day soon I can meet all of you properly, say thank you in person, and show you that she is in good hands.</p>
+    <p>So today, on her 24th birthday, her first birthday with me, please hug her a little tighter for me. Sing to her a little louder. Make her feel celebrated, and loved, and never alone. And on all the ordinary days after today, please keep doing it, a little at a time.</p>
+    <p>Thank you, truly, for loving her. Thank you for every time you were there for her when I couldn't be. And thank you, in advance, for every time you will be.</p>
+    <p class="sign">With all my respect, and all my heart,<br>her boyfriend in Tokyo 🤍</p>
+    </details>
+    </template>
+  </article>
 </section>
 
 <footer>made with love (and slightly too many photos)<br>for oun, 09.10</footer>
@@ -355,18 +589,51 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
 <div id="yt" aria-hidden="true"></div>
 
 <script>
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
   var $=function(id){return document.getElementById(id)};
+  var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.documentElement.classList.add('locked');
-
-  /* ---- days counter (calendar days since 19 Feb 2026, local date) ---- */
+  var G=!reduce&&window.gsap?window.gsap:null;
+  if(G&&window.ScrollTrigger)G.registerPlugin(ScrollTrigger);
+  root.classList.add('locked');if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
   function pad(n){return (n<10?'0':'')+n}
+
+  /* ---- confetti, lazy ---- */
+  var cs,PALETTE=['#f2c631','#9b1b1f','#efe4c9','#ff8a2a'];
+  function loadConfetti(cb){
+    if(window.confetti)return cb&&cb();
+    if(!cs){cs=document.createElement('script');cs.src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';cs.integrity='sha384-sPwMflxqfAN+Q5mvlkLmHiX3PORGbZSXHiSGPTXT9VHCD/AB+b+r+vJWsqprv+7k';cs.crossOrigin='anonymous';document.head.appendChild(cs)}
+    if(cb)cs.addEventListener('load',cb);
+  }
+  function burst(n,y){loadConfetti(function(){confetti({particleCount:n,spread:80,origin:{y:y},colors:PALETTE,disableForReducedMotion:true,ticks:220})})}
+
+  /* ---- before midnight (Cambodia time) ---- */
+  if(root.classList.contains('waiting')){
+    loadConfetti();
+    var cdTimer=setInterval(cd,1000);cd();
+    function cd(){
+      var left=Math.max(0,BDAY-Date.now()),s=Math.floor(left/1000);
+      $('cd-h').textContent=pad(Math.floor(s/3600));$('cd-m').textContent=pad(Math.floor(s%3600/60));$('cd-s').textContent=pad(s%60);
+      if(left<=0){
+        clearInterval(cdTimer);burst(140,.6);
+        setTimeout(function(){
+          var ny=$('notyet');
+          function done(){root.classList.remove('waiting');ny.remove();$('gate').focus()}
+          if(G)G.to(ny,{opacity:0,scale:1.04,duration:.9,ease:'power2.inOut',onComplete:done});else done();
+        },1400);
+      }
+    }
+  }
+
+  /* ---- days counter + Cambodia/Tokyo clocks (device time zone independent) ---- */
   function tick(){
-    var n=new Date();
-    var d=Math.round((Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())-Date.UTC(2026,1,19))/864e5);
+    var c=new Date(Date.now()+7*36e5); // Cambodia wall clock in UTC fields
+    var d=Math.floor((c.getTime()-Date.UTC(2026,1,19))/864e5);
     $('days').textContent=d;
-    $('tick').textContent='(+'+n.getHours()+'h '+pad(n.getMinutes())+'m '+pad(n.getSeconds())+'s)';
+    $('tick').textContent='(+'+c.getUTCHours()+'h '+pad(c.getUTCMinutes())+'m '+pad(c.getUTCSeconds())+'s)';
+    var t=new Date(c.getTime()+2*36e5);
+    $('clk-pp').textContent=pad(c.getUTCHours())+':'+pad(c.getUTCMinutes());
+    $('clk-tk').textContent=pad(t.getUTCHours())+':'+pad(t.getUTCMinutes());
   }
   tick();setInterval(tick,1000);
 
@@ -384,7 +651,8 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     };
     var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.async=true;document.head.appendChild(s);
   }
-  addEventListener('load',function(){(window.requestIdleCallback||setTimeout)(loadYT,{timeout:2000})});
+  if(document.readyState==='complete')loadYT();
+  else addEventListener('load',function(){(window.requestIdleCallback||setTimeout)(loadYT,{timeout:2000})});
   function play(){if(!ready){wantPlay=true;return}player.unMute();player.playVideo()}
 
   var music=$('music'),toggle=music.querySelector('.music-toggle');
@@ -399,13 +667,51 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
   /* ---- gate ---- */
   var gate=$('gate');
   gate.addEventListener('click',function(){
+    if(root.classList.contains('waiting'))return;
     play(); // must stay synchronous inside the tap for iOS Safari
-    gate.classList.add('open');
-    document.documentElement.classList.remove('locked');
-    $('page').classList.add('ready');
+    root.classList.remove('locked');
     music.hidden=false;
-    setTimeout(function(){gate.remove();$('hb').focus({preventScroll:true})},reduce?50:1200);
+    function done(){
+      gate.remove();if(window.ScrollTrigger)ScrollTrigger.refresh();
+      if(location.hash==='#family'){var f=$('family');f.setAttribute('tabindex','-1');f.focus({preventScroll:true});f.scrollIntoView({behavior:reduce?'auto':'smooth'})}
+      else $('hb').focus({preventScroll:true});
+    }
+    if(!G){gate.classList.add('open');setTimeout(done,reduce?50:1100);return}
+    G.timeline({onComplete:done,defaults:{ease:'power3.inOut'}})
+      .to('.ticket',{yPercent:-80,rotate:10,opacity:0,duration:.45,ease:'power2.in'})
+      .to('.curtain.l',{xPercent:-102,duration:1.1},'-=.15')
+      .to('.curtain.rr',{xPercent:102,duration:1.1},'<')
+      .to('.awning',{yPercent:-110,duration:.6,ease:'power2.in'},'<.35')
+      .from('.hero h1',{y:40,opacity:0,duration:.8,ease:'back.out(1.7)'},'-=.55')
+      .from('.seal',{scale:1.7,opacity:0,duration:.35,ease:'power4.in'},'-=.35')
+      .from('.hero-photo',{y:80,rotate:-12,opacity:0,duration:.9,ease:'power3.out'},'-=.3')
+      .from('.sticker',{scale:0,rotate:-120,duration:.55,ease:'back.out(2.2)'},'-=.35');
   },{once:true});
+
+  /* ---- 24 things (flip cards) ---- */
+  var THINGS=['When you laugh.','When you complain in that cute little voice.','When you study (so serious, so cute).','When you try your best, and then finally get it.','When you just... exist.',
+    ['Your cheeky cheeks. My dumpling. 🥟','p36',1400,788,'Parika\'s cheeky close-up selfie'],
+    'The way you wink in almost every photo.','How every photo booth turns into a full photoshoot.','How cat ears somehow always end up on your head.',
+    ['That you graduated from Dali University. Smart AND cute is honestly unfair.','p35',828,622,'Parika holding her Dali University diploma'],
+    'How stunning you look in a sampot.','Your sleepy face.','That one simple Instagram text turned into you.','You, the red roses, and Khema.',
+    'That you still pick up my video calls from 4,408 km away.','Your filters. Every single one. Especially the pig nose. 🐽','How you hide behind your drink when you\'re shy.',
+    'How you lean on me in the lemon booth photo.','That you\'re my favorite person to annoy.','That you laugh at my bad jokes anyway.',
+    'That you\'re the first thing I see when I sit down to work.','That you can be elegant and a total goofball in the same day.',
+    'That a fried-chicken version of you exists.','That this is your first birthday with me, and I get a hundred more.'];
+  var ol=$('things');
+  THINGS.forEach(function(t,i){
+    var txt=typeof t==='string'?t:t[0],li=document.createElement('li'),b=document.createElement('button');
+    b.className='flip';b.type='button';b.setAttribute('aria-pressed','false');
+    var back=document.createElement('span');back.className='b';
+    var num=document.createElement('i');num.textContent=(i+1)+'.';back.appendChild(num);
+    back.appendChild(document.createTextNode(txt));
+    if(typeof t!=='string'){var im=new Image(t[2],t[3]);im.src='../photos/'+t[1]+'.webp';im.alt=t[4];im.loading='lazy';im.decoding='async';back.appendChild(im)}
+    b.innerHTML='<span class="in"><span class="f" aria-hidden="true">'+(i+1)+'</span></span>';
+    b.firstChild.appendChild(back);
+    b.setAttribute('aria-label','Thing number '+(i+1));
+    b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);b.setAttribute('aria-label',on?(i+1)+'. '+txt:'Thing number '+(i+1))});
+    li.appendChild(b);ol.appendChild(li);
+  });
 
   /* ---- letter ---- */
   var env=$('env');
@@ -413,19 +719,49 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     var open=env.getAttribute('aria-expanded')!=='true';
     env.setAttribute('aria-expanded',open);
     $('letter').classList.toggle('open',open);
+    if(window.ScrollTrigger)setTimeout(function(){ScrollTrigger.refresh()},950);
   });
 
-  /* ---- wish + confetti (lazy-loaded near the cake) ---- */
-  var cs;
-  function loadConfetti(cb){
-    if(window.confetti)return cb&&cb();
-    if(!cs){cs=document.createElement('script');cs.src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';document.head.appendChild(cs)}
-    if(cb)cs.addEventListener('load',cb);
+  /* ---- open-when letters (one dialog, one open at a time) ---- */
+  var ow=$('ow');
+  document.querySelectorAll('.owb').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      $('ow-title').textContent=btn.textContent;
+      var body=$('ow-body');body.textContent='';
+      body.appendChild($('t-'+btn.dataset.ow).content.cloneNode(true));
+      if(ow.showModal)ow.showModal();else ow.setAttribute('open','');
+      if(G)G.from(ow.querySelector('.paper'),{y:60,rotate:-6,opacity:0,duration:.5,ease:'back.out(1.6)'});
+    });
+  });
+  function closeOw(){if(ow.close)ow.close();else ow.removeAttribute('open')}
+  $('ow-close').addEventListener('click',closeOw);
+  ow.addEventListener('click',function(e){if(e.target===ow)closeOw()});
+
+  /* ---- family letter lock ---- */
+  function unlockFamily(animate){
+    $('fam-lock').remove();
+    var body=$('fam-body');body.appendChild($('t-family').content.cloneNode(true));
+    if(animate&&G)G.from(body.children,{opacity:0,y:24,duration:.6,stagger:.06,ease:'power2.out'});
+    if(window.ScrollTrigger)ScrollTrigger.refresh();
   }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){loadConfetti();io.disconnect()}},{rootMargin:'600px'});
-    io.observe($('cake'));
+  var famOK=false;try{famOK=sessionStorage.getItem('pk-family')==='1'}catch(e){}
+  if(famOK)unlockFamily(false);
+  else{
+    $('fam-no').addEventListener('click',function(){try{sessionStorage.setItem('pk-family','1')}catch(e){}unlockFamily(true)});
+    $('fam-yes').addEventListener('click',function(){
+      $('fam-btns').remove();$('fam-nope').hidden=false;
+      if(G)G.from('#fam-nope',{opacity:0,y:16,duration:.5,ease:'back.out(1.6)'});
+      $('fam-go').focus();
+    });
+    $('fam-go').addEventListener('click',function(){
+      if(env.getAttribute('aria-expanded')!=='true')env.click();
+      env.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    });
   }
+
+  /* ---- wish ---- */
+  var cakeObs='IntersectionObserver' in window;
+  if(cakeObs){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){loadConfetti();io.disconnect()}},{rootMargin:'600px'});io.observe($('cake'))}
   var cake=$('cake');
   cake.addEventListener('click',function(){
     if(cake.classList.contains('out'))return;
@@ -433,13 +769,27 @@ footer{text-align:center;padding:40px 24px calc(110px + env(safe-area-inset-bott
     cake.setAttribute('aria-label','Candles blown out');
     $('wishmsg').textContent='wish granted (by me, mostly)';
     loadConfetti(function(){
-      var o={colors:['#f2c631','#9b1b1f','#efe4c9','#ff8a2a'],disableForReducedMotion:true,ticks:220};
+      var o={colors:PALETTE,disableForReducedMotion:true,ticks:220};
       confetti(Object.assign({particleCount:110,spread:80,origin:{y:.65}},o));
       setTimeout(function(){confetti(Object.assign({particleCount:60,angle:60,spread:60,origin:{x:0,y:.7}},o));confetti(Object.assign({particleCount:60,angle:120,spread:60,origin:{x:1,y:.7}},o))},250);
     });
   });
 
-})();
+  /* ---- video: play only while visible ---- */
+  var clip=$('clip');
+  if(reduce)clip.controls=true;
+  else if(cakeObs)new IntersectionObserver(function(es){
+    if(es[0].isIntersecting){var p=clip.play();if(p&&p.catch)p.catch(function(){})}else clip.pause();
+  },{threshold:.4}).observe(clip);
+
+  /* ---- scroll reveals: prints get "placed" on the table ---- */
+  if(G&&window.ScrollTrigger){
+    var sel='.formal,.tl li,.days-photo,.tn .pol,.booth>*,.khema .pol,.khema blockquote,.grid .pol,.room-wide,.room-tall,.things li,.env,.clocks,.walk,.owb,.cake';
+    G.set(sel,{opacity:0,y:36});
+    ScrollTrigger.batch(sel,{start:'top 90%',once:true,
+      onEnter:function(b){G.to(b,{opacity:1,y:0,duration:.7,ease:'power3.out',stagger:.08,overwrite:true})}});
+  }
+});
 </script>
 <script src="../chicken.js" defer></script>
 <script src="../volume.js" defer></script>
